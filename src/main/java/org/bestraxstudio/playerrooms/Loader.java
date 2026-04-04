@@ -1,13 +1,18 @@
 package org.bestraxstudio.playerrooms;
 
 import org.bestraxstudio.playerrooms.command.RoomCommand;
+import org.bestraxstudio.playerrooms.config.ConfigurationHolder;
 import org.bestraxstudio.playerrooms.gui.RoomChooseGui;
 import org.bestraxstudio.playerrooms.listener.GuiListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class Loader extends JavaPlugin {
 
     private static Loader instance;
+
+    private ConfigurationHolder config;
 
     private RoomChooseGui roomChooseGui;
     private RoomCommand roomCommand;
@@ -16,7 +21,10 @@ public class Loader extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        this.roomChooseGui = new RoomChooseGui();
+
+        this.config = new ConfigurationHolder(new File(getDataFolder(), "config.yml"));
+
+        this.roomChooseGui = new RoomChooseGui(config.getYaml().getString("gui.name"));
         this.roomCommand = new RoomCommand();
         this.guiListener = new GuiListener();
 

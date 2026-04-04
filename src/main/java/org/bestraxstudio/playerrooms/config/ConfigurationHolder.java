@@ -1,5 +1,6 @@
 package org.bestraxstudio.playerrooms.config;
 
+import org.bestraxstudio.playerrooms.Loader;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -16,8 +17,10 @@ public class ConfigurationHolder {
         }
         this.configFile = configFile;
         if (!configFile.exists()) {
+            Loader.getInstance().saveResource(configFile.getName(), false);
             configFile.getParentFile().mkdirs();
         }
+        loadConfig();
     }
 
     public void loadConfig() {

@@ -8,14 +8,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class RoomChooseGui implements InventoryHolder {
 
-    private final Inventory inventory;
+    private String title;
+    private Inventory inventory;
 
-    public RoomChooseGui() {
-        inventory = Bukkit.createInventory(this, 54, Component.text("Room Choose"));
+    public RoomChooseGui(String title) {
+        this.title = title;
+        inventory = Bukkit.createInventory(this, 54, Component.text(title));
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     @Override
     public @NotNull Inventory getInventory() {
-        return null;
+        return inventory;
     }
 }
