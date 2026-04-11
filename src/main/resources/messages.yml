@@ -22,6 +22,7 @@ info:
   current: "&aВы в комнате &e{room}&a. Игроки: &e{current}&a/&c{max}"
 
 command:
+  unknown: "&cНеизвестная команда. Используйте: /room leave, /room info, /room setprivate, /room invite, /room accept"
   only-players: "&cЭта команда только для игроков"
   no-permission: "&cУ вас нет прав на выполнение этой команды"
   reload-success: "&aКонфигурация перезагружена!"
@@ -34,9 +35,44 @@ protection:
   cannot-teleport: "&cВы не можете телепортироваться за пределы комнаты!"
   cannot-throw-pearl: "&cНельзя кидать эндер-жемчуг за пределы комнаты!"
   pvp-disabled: "&cPVP отключен в комнатах!"
+  damage-prevented: "&aУрон от окружающей среды отключен в комнате!"
 
 setprivate:
+  invalid-argument: "&cИспользуйте: /room setprivate true/false"
+  opened-state: "открыли"
+  closed-state: "закрыли"
   not-in-room: "&cВы не находитесь в комнате!"
   not-owner: "&cТолько владелец комнаты может менять её статус!"
   no-permission: "&cУ вас нет прав на изменение приватности комнаты!"
   success: "&aВы {state} комнату для входа других игроков"
+
+invite:
+  usage: "&cИспользуйте: /room invite <игрок>"
+  not-in-room: "&cВы не находитесь в комнате!"
+  not-owner: "&cТолько владелец комнаты может приглашать игроков!"
+  player-not-found: "&cИгрок не найден или не в сети!"
+  cannot-invite-self: "&cВы не можете пригласить самого себя!"
+  already-in-room: "&cИгрок &e{player} &cуже находится в комнате!"
+  sent: "&aВы пригласили игрока &e{player} &aв комнату &e{room}"
+  received: "\n&6&l══════════════════════════════════\n&eИгрок &6{player} &eприглашает вас в комнату &6{room}&e!\n&7Приглашение действительно 30 секунд\n&6&l══════════════════════════════════"
+  click-to-accept: "&aНажмите &e[ЗДЕСЬ] &aчтобы принять приглашение от &e{player}\n&7(/room accept {player})"
+  player-joined: "&aИгрок &e{player} &aпринял ваше приглашение и вошёл в комнату &e{room}"
+
+accept:
+  already-in-room: "&cВы уже находитесь в комнате! Выйдите сначала (/room leave)"
+  no-invitations: "&cУ вас нет активных приглашений!"
+  invitation-not-found: "&cПриглашение от игрока &e{player} &cне найдено или истекло!"
+  invitation-expired: "&cПриглашение истекло (30 секунд)!"
+  inviter-offline: "&cПригласивший вас игрок вышел из игры!"
+  room-not-found: "&cКомната, в которую вас пригласили, больше не существует!"
+
+plugin:
+  enabled: "&aPlayerRooms включен! Загружено комнат: {count}"
+  disabled: "&cPlayerRooms выключен!"
+
+generator:
+  config-not-found: "config.yml not found!"
+  world-not-found: "World not found!"
+  missing-bounds: "Room {room} missing bounds, skipping"
+  room-generated: "Generated room: {room}"
+  all-generated: "All rooms generated!"

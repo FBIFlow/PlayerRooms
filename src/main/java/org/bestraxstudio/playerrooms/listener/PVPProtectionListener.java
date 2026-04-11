@@ -42,12 +42,15 @@ public class PVPProtectionListener implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         Room room = roomService.getRoomByMember(player);
-        if (room != null && plugin.getConfigManager().getConfig().getBoolean("protection.disable-fall-damage", true)) {
+        if (room != null && plugin.getConfigManager().isDisableFallDamage()) {
             EntityDamageEvent.DamageCause cause = event.getCause();
-            if (cause == EntityDamageEvent.DamageCause.FALL || cause == EntityDamageEvent.DamageCause.FIRE ||
-                    cause == EntityDamageEvent.DamageCause.FIRE_TICK || cause == EntityDamageEvent.DamageCause.LAVA ||
+            if (cause == EntityDamageEvent.DamageCause.FALL ||
+                    cause == EntityDamageEvent.DamageCause.FIRE ||
+                    cause == EntityDamageEvent.DamageCause.FIRE_TICK ||
+                    cause == EntityDamageEvent.DamageCause.LAVA ||
                     cause == EntityDamageEvent.DamageCause.DROWNING) {
                 event.setCancelled(true);
+                player.sendMessage(plugin.getMessages().getMessage("protection.damage-prevented"));
             }
         }
     }

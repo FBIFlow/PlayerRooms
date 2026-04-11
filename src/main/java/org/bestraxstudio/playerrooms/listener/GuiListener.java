@@ -122,6 +122,7 @@ public class GuiListener implements Listener {
         }
 
         if (roomService.joinRoom(player, roomName)) {
+            playerRoomManager.setPreviousLocation(player, player.getLocation());
             playerRoomManager.setPlayerRoom(player, roomName);
             player.teleport(room.getSpawnPoint());
             Map<String, String> placeholders = new HashMap<>();

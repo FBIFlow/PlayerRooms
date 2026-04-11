@@ -2,7 +2,8 @@ permissions:
   admin: playerrooms.admin
   force-join: playerrooms.forcejoin
 
-world: "world"
+world: "world_rooms"
+generate-test-rooms: true
 
 rooms:
   room1:
@@ -253,33 +254,33 @@ gui:
         6: { name: "", material: GRAY_STAINED_GLASS_PANE }
         7: { name: "", material: GRAY_STAINED_GLASS_PANE }
         8: { name: "", material: GRAY_STAINED_GLASS_PANE }
-        9: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room1, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        10: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room2, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        11: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room3, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        12: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room4, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        13: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room5, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        14: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room6, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        15: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room7, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        16: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room8, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        17: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room9, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        18: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room10, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        19: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room11, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        20: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room12, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        21: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room13, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        22: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room14, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        23: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room15, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        24: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room16, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        25: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room17, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        26: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room18, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        27: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room19, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        28: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room20, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        29: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room21, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        30: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room22, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        31: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room23, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        32: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room24, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        33: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room25, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        34: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room26, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
-        35: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room27, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        9: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room1, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        10: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room2, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        11: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room3, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        12: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room4, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        13: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room5, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        14: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room6, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        15: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room7, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        16: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room8, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        17: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room9, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        18: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room10, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        19: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room11, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        20: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room12, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        21: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room13, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        22: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room14, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        23: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room15, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        24: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room16, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        25: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room17, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        26: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room18, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        27: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room19, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        28: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room20, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        29: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room21, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        30: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room22, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        31: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room23, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        32: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room24, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        33: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room25, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        34: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room26, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
+        35: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room27, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%busy_color%%private_color%Комната %private_text%" ] }
         36: { name: "", material: GRAY_STAINED_GLASS_PANE }
         37: { name: "", material: GRAY_STAINED_GLASS_PANE }
         38: { name: "", material: GRAY_STAINED_GLASS_PANE }

@@ -5,6 +5,7 @@ import org.bestraxstudio.playerrooms.config.ConfigManager;
 import org.bestraxstudio.playerrooms.config.Messages;
 import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.listener.*;
+import org.bestraxstudio.playerrooms.manager.InvitationManager;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.service.RoomService;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +17,7 @@ public class Loader extends JavaPlugin {
     private Messages messages;
     private RoomService roomService;
     private PlayerRoomManager playerRoomManager;
+    private InvitationManager invitationManager;
     private GuiBuilder guiBuilder;
 
     @Override
@@ -26,6 +28,7 @@ public class Loader extends JavaPlugin {
         this.messages = new Messages(this);
         this.roomService = new RoomService(this);
         this.playerRoomManager = new PlayerRoomManager();
+        this.invitationManager = new InvitationManager();
         this.guiBuilder = new GuiBuilder(this);
 
         this.roomService.loadRoomsFromConfig();
@@ -41,16 +44,20 @@ public class Loader extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InteractionProtectionListener(this), this);
         getServer().getPluginManager().registerEvents(new PVPProtectionListener(this), this);
 
-        TestRoomGenerator generator = new TestRoomGenerator(this);
-        generator.generateAllRooms();
+        if (configManager.getGenerateTestRooms()) {
+            TestRoomGenerator generator = new TestRoomGenerator(this);
+            generator.generateAllRooms();
+        }
 
-        getLogger().info("PlayerRooms enabled! Loaded " + roomService.getAllRooms().size() + " rooms.");
+        getLogger().info(messages.getMessage("plugin.enabled",
+                java.util.Map.of("count", String.valueOf(roomService.getAllRooms().size()))));
     }
 
     @Override
     public void onDisable() {
         if (playerRoomManager != null) playerRoomManager.clearAll();
-        getLogger().info("PlayerRooms disabled!");
+        if (invitationManager != null) invitationManager.cleanup();
+        getLogger().info(messages.getMessage("plugin.disabled"));
     }
 
     public static Loader getInstance() { return instance; }
@@ -58,5 +65,6 @@ public class Loader extends JavaPlugin {
     public Messages getMessages() { return messages; }
     public RoomService getRoomService() { return roomService; }
     public PlayerRoomManager getPlayerRoomManager() { return playerRoomManager; }
+    public InvitationManager getInvitationManager() { return invitationManager; }
     public GuiBuilder getGuiBuilder() { return guiBuilder; }
 }

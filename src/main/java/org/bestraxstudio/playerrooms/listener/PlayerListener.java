@@ -2,6 +2,7 @@ package org.bestraxstudio.playerrooms.listener;
 
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.gui.GuiBuilder;
+import org.bestraxstudio.playerrooms.manager.InvitationManager;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
@@ -15,12 +16,14 @@ public class PlayerListener implements Listener {
     private final Loader plugin;
     private final RoomService roomService;
     private final PlayerRoomManager playerRoomManager;
+    private final InvitationManager invitationManager;
     private final GuiBuilder guiBuilder;
 
     public PlayerListener(Loader plugin) {
         this.plugin = plugin;
         this.roomService = plugin.getRoomService();
         this.playerRoomManager = plugin.getPlayerRoomManager();
+        this.invitationManager = plugin.getInvitationManager();
         this.guiBuilder = plugin.getGuiBuilder();
     }
 
@@ -34,5 +37,6 @@ public class PlayerListener implements Listener {
             guiBuilder.refreshAllGuis();
         }
         guiBuilder.removePlayer(player);
+        invitationManager.removeAllInvitations(player);
     }
 }

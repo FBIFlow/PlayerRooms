@@ -88,7 +88,6 @@ public class RoomProtectionListener implements Listener {
         guiBuilder.refreshAllGuis();
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("room", room.getRoomName());
-        placeholders.put("reason", "move");
         player.sendMessage(messages.getMessage("leave.bounds-exit", placeholders));
     }
 }

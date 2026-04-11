@@ -49,10 +49,17 @@ public class RoomService {
         return null;
     }
     public Map<String, Room> getAllRooms() { return new HashMap<>(rooms); }
+
     public boolean joinRoom(Player player, String roomName) {
         Room room = getRoom(roomName);
         return room != null && room.canJoin(player) && room.addMember(player);
     }
+
+    public boolean joinRoomViaInvite(Player player, String roomName) {
+        Room room = getRoom(roomName);
+        return room != null && room.addMember(player, true);
+    }
+
     public boolean leaveRoom(Player player, String roomName) {
         Room room = getRoom(roomName);
         return room != null && room.removeMember(player);

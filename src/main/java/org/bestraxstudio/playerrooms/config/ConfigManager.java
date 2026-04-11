@@ -1,8 +1,6 @@
 package org.bestraxstudio.playerrooms.config;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,6 +32,11 @@ public class ConfigManager {
     public String getWorldName() {
         return config.getString("world", "world");
     }
+
+    public boolean getGenerateTestRooms() {
+        return config.getBoolean("generate-test-rooms", false);
+    }
+
     public Set<String> getRoomNames() {
         ConfigurationSection roomsSection = config.getConfigurationSection("rooms");
         return roomsSection != null ? roomsSection.getKeys(false) : new HashSet<>();
@@ -44,8 +47,7 @@ public class ConfigManager {
         String[] parts = spawnStr.split(" ");
         if (parts.length < 3) return null;
 
-        World world = Bukkit.getWorld(getWorldName());
-        if (world == null) world = Bukkit.getWorlds().get(0);
+        World world = getOrCreateWorld();
 
         double x = Double.parseDouble(parts[0]);
         double y = Double.parseDouble(parts[1]);
@@ -66,8 +68,7 @@ public class ConfigManager {
         String[] parts = minStr.split(" ");
         if (parts.length < 3) return null;
 
-        World world = Bukkit.getWorld(getWorldName());
-        if (world == null) world = Bukkit.getWorlds().get(0);
+        World world = getOrCreateWorld();
 
         return new Location(world, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));
     }
@@ -78,8 +79,7 @@ public class ConfigManager {
         String[] parts = maxStr.split(" ");
         if (parts.length < 3) return null;
 
-        World world = Bukkit.getWorld(getWorldName());
-        if (world == null) world = Bukkit.getWorlds().get(0);
+        World world = getOrCreateWorld();
 
         return new Location(world, Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));
     }
@@ -96,6 +96,19 @@ public class ConfigManager {
     public String getPrivateStateColor(boolean isPrivate) {
         String path = "gui.strings.private-state." + (isPrivate ? "private" : "open") + ".color";
         return config.getString(path, isPrivate ? "#FF0000" : "#00FF00");
+    }
+
+    public World getOrCreateWorld() {
+        String worldName = getWorldName();
+        World world = Bukkit.getWorld(worldName);
+        if (world == null) {
+            plugin.getLogger().info("Creating world: " + worldName);
+            WorldCreator creator = new WorldCreator(worldName);
+            creator.generateStructures(false);
+            creator.type(WorldType.FLAT);
+            world = creator.createWorld();
+        }
+        return world;
     }
 
     public String getBusyStateText(boolean isBusy) {
@@ -121,4 +134,6 @@ public class ConfigManager {
     public List<String> getSlotLore(String pageId, int slot) { return config.getStringList("gui.pages." + pageId + ".slots." + slot + ".lore"); }
     public String getSlotLinkedRoom(String pageId, int slot) { return config.getString("gui.pages." + pageId + ".slots." + slot + ".linked-room"); }
     public String getSlotAction(String pageId, int slot) { return config.getString("gui.pages." + pageId + ".slots." + slot + ".action"); }
+
+    public boolean isDisableFallDamage() { return config.getBoolean("protection.disable-fall-damage", true); }
 }
