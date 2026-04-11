@@ -1,54 +1,62 @@
 package org.bestraxstudio.playerrooms;
 
 import org.bestraxstudio.playerrooms.command.RoomCommand;
-import org.bestraxstudio.playerrooms.config.ConfigurationHolder;
-import org.bestraxstudio.playerrooms.gui.RoomChooseGui;
-import org.bestraxstudio.playerrooms.listener.GuiListener;
+import org.bestraxstudio.playerrooms.config.ConfigManager;
+import org.bestraxstudio.playerrooms.config.Messages;
+import org.bestraxstudio.playerrooms.gui.GuiBuilder;
+import org.bestraxstudio.playerrooms.listener.*;
+import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
+import org.bestraxstudio.playerrooms.service.RoomService;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 public class Loader extends JavaPlugin {
 
     private static Loader instance;
-
-    private ConfigurationHolder config;
-
-    private RoomChooseGui roomChooseGui;
-    private RoomCommand roomCommand;
-    private GuiListener guiListener;
+    private ConfigManager configManager;
+    private Messages messages;
+    private RoomService roomService;
+    private PlayerRoomManager playerRoomManager;
+    private GuiBuilder guiBuilder;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        this.config = new ConfigurationHolder(new File(getDataFolder(), "config.yml"));
+        this.configManager = new ConfigManager(this);
+        this.messages = new Messages(this);
+        this.roomService = new RoomService(this);
+        this.playerRoomManager = new PlayerRoomManager();
+        this.guiBuilder = new GuiBuilder(this);
 
-        this.roomChooseGui = new RoomChooseGui(config.getYaml().getString("gui.name"));
-        this.roomCommand = new RoomCommand();
-        this.guiListener = new GuiListener();
+        this.roomService.loadRoomsFromConfig();
 
-        var bukkitCommand = getServer().getPluginCommand("room");
-        if (bukkitCommand == null) {
-            throw new RuntimeException("No command found.");
-        }
-        bukkitCommand.setExecutor(roomCommand);
-        bukkitCommand.setTabCompleter(roomCommand);
+        RoomCommand command = new RoomCommand(this);
+        java.util.Objects.requireNonNull(getServer().getPluginCommand("room")).setExecutor(command);
+        getServer().getPluginCommand("room").setTabCompleter(command);
 
-        getServer().getPluginManager().registerEvents(guiListener, this);
+        getServer().getPluginManager().registerEvents(new GuiListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        getServer().getPluginManager().registerEvents(new RoomProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(new BlockProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(new InteractionProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(new PVPProtectionListener(this), this);
+
+        TestRoomGenerator generator = new TestRoomGenerator(this);
+        generator.generateAllRooms();
+
+        getLogger().info("PlayerRooms enabled! Loaded " + roomService.getAllRooms().size() + " rooms.");
     }
 
     @Override
     public void onDisable() {
-
+        if (playerRoomManager != null) playerRoomManager.clearAll();
+        getLogger().info("PlayerRooms disabled!");
     }
 
-    public static Loader getInstance() {
-        return instance;
-    }
-
-    public RoomChooseGui getRoomChooseGui() {
-        return roomChooseGui;
-    }
-
+    public static Loader getInstance() { return instance; }
+    public ConfigManager getConfigManager() { return configManager; }
+    public Messages getMessages() { return messages; }
+    public RoomService getRoomService() { return roomService; }
+    public PlayerRoomManager getPlayerRoomManager() { return playerRoomManager; }
+    public GuiBuilder getGuiBuilder() { return guiBuilder; }
 }

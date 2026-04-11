@@ -1,219 +1,222 @@
 permissions:
   admin: playerrooms.admin
   force-join: playerrooms.forcejoin
+
+world: "world"
+
 rooms:
   room1:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 20 33 20
+    min: 10 32 10
+    max: 30 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room2:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 60 33 20
+    min: 50 32 10
+    max: 70 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room3:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 100 33 20
+    min: 90 32 10
+    max: 110 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room4:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 140 33 20
+    min: 130 32 10
+    max: 150 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room5:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 180 33 20
+    min: 170 32 10
+    max: 190 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room6:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 220 33 20
+    min: 210 32 10
+    max: 230 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room7:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 260 33 20
+    min: 250 32 10
+    max: 270 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room8:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 300 33 20
+    min: 290 32 10
+    max: 310 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room9:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 340 33 20
+    min: 330 32 10
+    max: 350 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.player
       make-private: playerrooms.player
   room10:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 380 33 20
+    min: 370 32 10
+    max: 390 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room11:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 420 33 20
+    min: 410 32 10
+    max: 430 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room12:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 460 33 20
+    min: 450 32 10
+    max: 470 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room13:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 500 33 20
+    min: 490 32 10
+    max: 510 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room14:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 540 33 20
+    min: 530 32 10
+    max: 550 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room15:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 580 33 20
+    min: 570 32 10
+    max: 590 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room16:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 620 33 20
+    min: 610 32 10
+    max: 630 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room17:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 660 33 20
+    min: 650 32 10
+    max: 670 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room18:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 700 33 20
+    min: 690 32 10
+    max: 710 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.1
       make-private: playerrooms.donate.vip.1
   room19:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 740 33 20
+    min: 730 32 10
+    max: 750 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room20:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 780 33 20
+    min: 770 32 10
+    max: 790 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room21:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 820 33 20
+    min: 810 32 10
+    max: 830 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room22:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 860 33 20
+    min: 850 32 10
+    max: 870 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room23:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 900 33 20
+    min: 890 32 10
+    max: 910 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room24:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 940 33 20
+    min: 930 32 10
+    max: 950 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room25:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 980 33 20
+    min: 970 32 10
+    max: 990 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room26:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 1020 33 20
+    min: 1010 32 10
+    max: 1030 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
       make-private: playerrooms.donate.vip.2
   room27:
-    spawn-point: 0 90 0
-    min: -10 85 -10
-    max: 10 100 10
+    spawn-point: 1060 33 20
+    min: 1050 32 10
+    max: 1070 42 30
     max-players-default: 4
     permissions:
       join: playerrooms.donate.vip.2
@@ -223,266 +226,66 @@ gui:
   strings:
     private-state:
       open:
-        text: "Открыта" # %private_text%
-        color: "#00FF00" # %private_color%
+        text: "Открыта"
+        color: "#00FF00"
       private:
-        text: "Закрыта" # %private_text%
-        color: "#FF0000" # %private_color%
+        text: "Закрыта"
+        color: "#FF0000"
     busy-state:
       free:
-        text: "Свободна" # %busy_text%
-        color: "#00FF00" # %busy_color%
+        text: "Свободна"
+        color: "#00FF00"
       busy:
-        text: "Занята" # %busy_text%
-        color: "#FF0000" # %busy_color%
+        text: "Занята"
+        color: "#FF0000"
 
   pages:
     1:
       name: "#FF0000PlayerRooms"
       size: 54
       slots:
-        0:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        1:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        2:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        3:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        4:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        5:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        6:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        7:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        8:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        9:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room1
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        10:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room2
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        11:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room3
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        12:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room4
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        13:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room5
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        14:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room6
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        15:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room7
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        16:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room8
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        17:
-          name: "%busy_color%Обычная комната"
-          material: BOOKSHELF
-          linked-room: room9
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        18:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room10
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        19:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room11
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        20:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room12
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        21:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room13
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        22:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room14
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        23:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room15
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        24:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room16
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        25:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room17
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        26:
-          name: "%busy_color%VIP комната: Улей"
-          material: HONEYCOMB_BLOCK
-          linked-room: room18
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        27:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room19
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        28:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room20
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        29:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room24
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        30:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room22
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        31:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room23
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        32:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room24
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        33:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room25
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        34:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room26
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        35:
-          name: "%busy_color%VIP комната: Остров"
-          material: GRASS_BLOCK
-          linked-room: room27
-          lore:
-            - "%busy_color%Места: %current_player%/%max_players%"
-            - "%private_color%%busy_color%Комната %private_text%"
-        36:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        37:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        38:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        39:
-          name: "Previous page"
-          material: ARROW
-          action: previous-page
-        40:
-          name: ""
-          material: SPECTRAL_ARROW
-        41:
-          name: "Next page"
-          material: ARROW
-          action: next-page
-        42:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        43:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
-        44:
-          name: ""
-          material: GRAY_STAINED_GLASS_PANE
+        0: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        1: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        2: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        3: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        4: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        5: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        6: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        7: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        8: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        9: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room1, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        10: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room2, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        11: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room3, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        12: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room4, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        13: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room5, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        14: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room6, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        15: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room7, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        16: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room8, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        17: { name: "%busy_color%Обычная комната", material: BOOKSHELF, linked-room: room9, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        18: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room10, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        19: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room11, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        20: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room12, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        21: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room13, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        22: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room14, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        23: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room15, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        24: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room16, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        25: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room17, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        26: { name: "%busy_color%VIP комната: Улей", material: HONEYCOMB_BLOCK, linked-room: room18, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        27: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room19, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        28: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room20, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        29: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room21, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        30: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room22, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        31: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room23, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        32: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room24, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        33: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room25, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        34: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room26, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        35: { name: "%busy_color%VIP комната: Остров", material: GRASS_BLOCK, linked-room: room27, lore: [ "%busy_color%Места: %current_player%/%max_players%", "%private_color%%busy_color%Комната %private_text%" ] }
+        36: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        37: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        38: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        39: { name: "Previous page", material: ARROW, action: previous-page }
+        40: { name: "", material: SPECTRAL_ARROW }
+        41: { name: "Next page", material: ARROW, action: next-page }
+        42: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        43: { name: "", material: GRAY_STAINED_GLASS_PANE }
+        44: { name: "", material: GRAY_STAINED_GLASS_PANE }

@@ -1,7 +1,9 @@
 name: PlayerRooms
 main: org.bestraxstudio.playerrooms.Loader
-api-version: 21
+api-version: 1.21
 version: 1.0
 
 commands:
   room:
+    description: Open rooms menu
+    usage: /room
