@@ -3,7 +3,7 @@ permissions:
   force-join: playerrooms.forcejoin
 
 world: "world_rooms"
-generate-test-rooms: true
+generate-test-rooms: false
 
 rooms:
   room1:
