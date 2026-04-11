@@ -222,9 +222,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         targetPlaceholders.put("player", player.getName());
         targetPlaceholders.put("room", currentRoom.getRoomName());
         String inviteMessage = messages.getMessage("invite.received", targetPlaceholders);
-        String clickMessage = messages.getMessage("invite.click-to-accept", targetPlaceholders);
         target.sendMessage(inviteMessage);
-        target.sendMessage(clickMessage);
     }
 
     private void acceptInvitation(Player player, String[] args) {
