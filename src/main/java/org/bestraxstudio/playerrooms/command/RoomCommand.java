@@ -38,7 +38,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(messages.getMessage("command.only-players"));
+            sender.sendMessage(messages.getCommandOnlyPlayers());
             return true;
         }
 
@@ -57,7 +57,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission(plugin.getConfigManager().getAdminPermission())) {
                     reloadConfig(player);
                 } else {
-                    player.sendMessage(messages.getMessage("command.no-permission"));
+                    player.sendMessage(messages.getCommandNoPermission());
                 }
                 break;
             case "info":
@@ -72,8 +72,17 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             case "accept":
                 acceptInvitation(player, args);
                 break;
+            case "ignore":
+                ignorePlayer(player, args);
+                break;
+            case "unignore":
+                unignorePlayer(player, args);
+                break;
+            case "ignorelist":
+                showIgnoreList(player);
+                break;
             default:
-                player.sendMessage(messages.getMessage("command.unknown"));
+                player.sendMessage(messages.getCommandUnknown());
                 break;
         }
         return true;
@@ -85,20 +94,31 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         if (firstPage != null) {
             plugin.getGuiBuilder().openGui(player, firstPage);
         } else {
-            player.sendMessage(messages.getMessage("gui.no-pages"));
+            player.sendMessage(messages.getGuiNoPages());
         }
     }
 
     private void leaveRoom(Player player) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(messages.getMessage("leave.not-in-room"));
+            player.sendMessage(messages.getLeaveNotInRoom());
             return;
         }
 
         Location previousLocation = playerRoomManager.getPreviousLocation(player);
 
+        UUID newOwnerId = currentRoom.getNewOwnerAfterRemove(player);
         roomService.leaveCurrentRoom(player);
+
+        if (newOwnerId != null && currentRoom.isPrivate()) {
+            Player newOwner = Bukkit.getPlayer(newOwnerId);
+            if (newOwner != null && newOwner.isOnline()) {
+                Map<String, String> placeholders = new HashMap<>();
+                placeholders.put("room", currentRoom.getRoomName());
+                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
+            }
+        }
+
         playerRoomManager.removePlayer(player);
         plugin.getGuiBuilder().refreshAllGuis();
 
@@ -111,7 +131,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
 
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("room", currentRoom.getRoomName());
-        player.sendMessage(messages.getMessage("leave.success", placeholders));
+        player.sendMessage(messages.getLeaveSuccess(placeholders));
     }
 
     private void reloadConfig(Player player) {
@@ -119,13 +139,14 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         plugin.getMessages().reload();
         roomService.loadRoomsFromConfig();
         plugin.getGuiBuilder().refreshAllGuis();
-        player.sendMessage(messages.getMessage("command.reload-success"));
+        plugin.reloadCommandBlocker();
+        player.sendMessage(messages.getCommandReloadSuccess());
     }
 
     private void showInfo(Player player) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(messages.getMessage("info.not-in-room"));
+            player.sendMessage(messages.getInfoNotInRoom());
             return;
         }
 
@@ -133,24 +154,24 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         placeholders.put("room", currentRoom.getRoomName());
         placeholders.put("current", String.valueOf(currentRoom.getCurrentPlayers()));
         placeholders.put("max", String.valueOf(currentRoom.getMaxPlayers()));
-        player.sendMessage(messages.getMessage("info.current", placeholders));
+        player.sendMessage(messages.getInfoCurrent(placeholders));
     }
 
     private void setPrivate(Player player, String[] args) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(messages.getMessage("setprivate.not-in-room"));
+            player.sendMessage(messages.getSetprivateNotInRoom());
             return;
         }
 
         if (!currentRoom.isOwner(player)) {
-            player.sendMessage(messages.getMessage("setprivate.not-owner"));
+            player.sendMessage(messages.getSetprivateNotOwner());
             return;
         }
 
         String requiredPerm = currentRoom.getMakePrivatePermission();
         if (!requiredPerm.equalsIgnoreCase("all") && !player.hasPermission(requiredPerm)) {
-            player.sendMessage(messages.getMessage("setprivate.no-permission"));
+            player.sendMessage(messages.getSetprivateNoPermission());
             return;
         }
 
@@ -161,7 +182,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             } else if (args[1].equalsIgnoreCase("false") || args[1].equalsIgnoreCase("off")) {
                 newState = false;
             } else {
-                player.sendMessage(messages.getMessage("setprivate.invalid-argument"));
+                player.sendMessage(messages.getSetprivateInvalidArgument());
                 return;
             }
         } else {
@@ -172,62 +193,68 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         plugin.getGuiBuilder().refreshAllGuis();
 
         Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("state", newState ? messages.getMessage("setprivate.closed-state") : messages.getMessage("setprivate.opened-state"));
-        player.sendMessage(messages.getMessage("setprivate.success", placeholders));
+        placeholders.put("state", newState ? messages.getSetprivateClosedState() : messages.getSetprivateOpenedState());
+        player.sendMessage(messages.getSetprivateSuccess(placeholders));
     }
 
     private void invitePlayer(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(messages.getMessage("invite.usage"));
+            player.sendMessage(messages.getInviteUsage());
             return;
         }
 
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(messages.getMessage("invite.not-in-room"));
+            player.sendMessage(messages.getInviteNotInRoom());
             return;
         }
 
         if (!currentRoom.isOwner(player)) {
-            player.sendMessage(messages.getMessage("invite.not-owner"));
+            player.sendMessage(messages.getInviteNotOwner());
             return;
         }
 
         Player target = Bukkit.getPlayer(args[1]);
         if (target == null || !target.isOnline()) {
-            player.sendMessage(messages.getMessage("invite.player-not-found"));
+            player.sendMessage(messages.getInvitePlayerNotFound());
             return;
         }
 
         if (target.equals(player)) {
-            player.sendMessage(messages.getMessage("invite.cannot-invite-self"));
+            player.sendMessage(messages.getInviteCannotInviteSelf());
             return;
         }
 
         if (roomService.getRoomByMember(target) != null) {
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("player", target.getName());
-            player.sendMessage(messages.getMessage("invite.already-in-room", placeholders));
+            player.sendMessage(messages.getInviteAlreadyInRoom(placeholders));
+            return;
+        }
+
+        Map<String, String> inviterPlaceholders = new HashMap<>();
+        inviterPlaceholders.put("player", target.getName());
+        inviterPlaceholders.put("room", currentRoom.getRoomName());
+        player.sendMessage(messages.getInviteSent(inviterPlaceholders));
+
+        if (plugin.getIgnoreListManager().isIgnored(target, player)) {
             return;
         }
 
         invitationManager.createInvitation(player, target, currentRoom.getRoomName());
 
-        Map<String, String> inviterPlaceholders = new HashMap<>();
-        inviterPlaceholders.put("player", target.getName());
-        inviterPlaceholders.put("room", currentRoom.getRoomName());
-        player.sendMessage(messages.getMessage("invite.sent", inviterPlaceholders));
-
         Map<String, String> targetPlaceholders = new HashMap<>();
         targetPlaceholders.put("player", player.getName());
         targetPlaceholders.put("room", currentRoom.getRoomName());
-        String inviteMessage = messages.getMessage("invite.received", targetPlaceholders);
+        String inviteMessage = messages.getInviteReceived(targetPlaceholders);
+        String clickMessage = messages.getInviteClickToAccept(targetPlaceholders);
         target.sendMessage(inviteMessage);
+        target.sendMessage(clickMessage);
     }
 
     private void acceptInvitation(Player player, String[] args) {
         if (roomService.getRoomByMember(player) != null) {
-            player.sendMessage(messages.getMessage("accept.already-in-room"));
+            player.sendMessage(messages.getAcceptAlreadyInRoom());
             return;
         }
 
@@ -237,39 +264,39 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             if (invitation == null) {
                 Map<String, String> placeholders = new HashMap<>();
                 placeholders.put("player", args[1]);
-                player.sendMessage(messages.getMessage("accept.invitation-not-found", placeholders));
+                player.sendMessage(messages.getAcceptInvitationNotFound(placeholders));
                 return;
             }
         } else {
             invitation = invitationManager.getLatestInvitation(player);
             if (invitation == null) {
-                player.sendMessage(messages.getMessage("accept.no-invitations"));
+                player.sendMessage(messages.getAcceptNoInvitations());
                 return;
             }
         }
 
         if (invitation.isExpired()) {
             invitationManager.removeInvitation(player, invitation);
-            player.sendMessage(messages.getMessage("accept.invitation-expired"));
+            player.sendMessage(messages.getAcceptInvitationExpired());
             return;
         }
 
         Player inviter = Bukkit.getPlayer(invitation.getInviter());
         if (inviter == null || !inviter.isOnline()) {
-            player.sendMessage(messages.getMessage("accept.inviter-offline"));
+            player.sendMessage(messages.getAcceptInviterOffline());
             invitationManager.removeInvitation(player, invitation);
             return;
         }
 
         Room room = roomService.getRoom(invitation.getRoomName());
         if (room == null) {
-            player.sendMessage(messages.getMessage("accept.room-not-found"));
+            player.sendMessage(messages.getAcceptRoomNotFound());
             invitationManager.removeInvitation(player, invitation);
             return;
         }
 
         if (room.isFull()) {
-            player.sendMessage(messages.getMessage("join.full"));
+            player.sendMessage(messages.getJoinFull());
             invitationManager.removeInvitation(player, invitation);
             return;
         }
@@ -281,17 +308,90 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
 
             Map<String, String> joinPlaceholders = new HashMap<>();
             joinPlaceholders.put("room", room.getRoomName());
-            player.sendMessage(messages.getMessage("join.success", joinPlaceholders));
+            player.sendMessage(messages.getJoinSuccess(joinPlaceholders));
 
             Map<String, String> inviterPlaceholders = new HashMap<>();
             inviterPlaceholders.put("player", player.getName());
             inviterPlaceholders.put("room", room.getRoomName());
-            inviter.sendMessage(messages.getMessage("invite.player-joined", inviterPlaceholders));
+            inviter.sendMessage(messages.getInvitePlayerJoined(inviterPlaceholders));
 
             plugin.getGuiBuilder().refreshAllGuis();
             invitationManager.removeInvitation(player, invitation);
         } else {
-            player.sendMessage(messages.getMessage("join.error"));
+            player.sendMessage(messages.getJoinError());
+        }
+    }
+
+    private void ignorePlayer(Player player, String[] args) {
+        if (args.length < 2) {
+            player.sendMessage(messages.getIgnoreUsage());
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(args[1]);
+        if (target == null || !target.isOnline()) {
+            player.sendMessage(messages.getIgnorePlayerNotFound());
+            return;
+        }
+
+        if (target.equals(player)) {
+            player.sendMessage(messages.getIgnoreCannotIgnoreSelf());
+            return;
+        }
+
+        if (plugin.getIgnoreListManager().isIgnored(player, target)) {
+            Map<String, String> placeholders = new HashMap<>();
+            placeholders.put("player", target.getName());
+            player.sendMessage(messages.getIgnoreAlreadyIgnored(placeholders));
+            return;
+        }
+
+        plugin.getIgnoreListManager().addIgnore(player, target);
+        invitationManager.removeInvitationsFrom(player, target);
+
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("player", target.getName());
+        player.sendMessage(messages.getIgnoreSuccess(placeholders));
+    }
+
+    private void unignorePlayer(Player player, String[] args) {
+        if (args.length < 2) {
+            player.sendMessage(messages.getUnignoreUsage());
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(args[1]);
+        if (target == null || !target.isOnline()) {
+            player.sendMessage(messages.getUnignorePlayerNotFound());
+            return;
+        }
+
+        if (!plugin.getIgnoreListManager().isIgnored(player, target)) {
+            Map<String, String> placeholders = new HashMap<>();
+            placeholders.put("player", target.getName());
+            player.sendMessage(messages.getUnignoreNotIgnored(placeholders));
+            return;
+        }
+
+        plugin.getIgnoreListManager().removeIgnore(player, target);
+
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("player", target.getName());
+        player.sendMessage(messages.getUnignoreSuccess(placeholders));
+    }
+
+    private void showIgnoreList(Player player) {
+        List<String> ignored = plugin.getIgnoreListManager().getIgnoreList(player);
+        if (ignored.isEmpty()) {
+            player.sendMessage(messages.getIgnoreListEmpty());
+            return;
+        }
+
+        player.sendMessage(messages.getIgnoreListHeader());
+        for (String name : ignored) {
+            Map<String, String> placeholders = new HashMap<>();
+            placeholders.put("player", name);
+            player.sendMessage(messages.getIgnoreListEntry(placeholders));
         }
     }
 
@@ -306,6 +406,9 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             completions.add("leave");
             completions.add("info");
             completions.add("accept");
+            completions.add("ignore");
+            completions.add("unignore");
+            completions.add("ignorelist");
             if (roomService.getRoomByMember(player) != null && roomService.getRoomByMember(player).isOwner(player)) {
                 completions.add("setprivate");
                 completions.add("invite");
@@ -325,9 +428,9 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             return completions;
         }
 
-        if (args.length == 2 && args[0].equalsIgnoreCase("invite")) {
+        if (args.length == 2 && (args[0].equalsIgnoreCase("invite") || args[0].equalsIgnoreCase("ignore") || args[0].equalsIgnoreCase("unignore"))) {
             for (Player online : Bukkit.getOnlinePlayers()) {
-                if (!online.equals(player) && roomService.getRoomByMember(online) == null) {
+                if (!online.equals(player)) {
                     completions.add(online.getName());
                 }
             }

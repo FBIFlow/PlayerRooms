@@ -7,14 +7,15 @@ import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 public class GuiListener implements Listener {
 
@@ -58,8 +59,15 @@ public class GuiListener implements Listener {
 
     private void handleAction(Player player, String action) {
         switch (action.toLowerCase()) {
-            case "next-page": nextPage(player); break;
-            case "previous-page": previousPage(player); break;
+            case "next-page":
+                nextPage(player);
+                break;
+            case "previous-page":
+                previousPage(player);
+                break;
+            case "leave":
+                leaveRoom(player);
+                break;
         }
     }
 
@@ -68,9 +76,13 @@ public class GuiListener implements Listener {
         Set<String> pages = guiBuilder.getAvailablePages();
         boolean found = false;
         String nextPage = null;
-        for (String page : pages) {
-            if (found) { nextPage = page; break; }
-            if (page.equals(currentPage)) found = true;
+        List<String> pageList = new ArrayList<>(pages);
+        for (int i = 0; i < pageList.size(); i++) {
+            if (found) {
+                nextPage = pageList.get(i);
+                break;
+            }
+            if (pageList.get(i).equals(currentPage)) found = true;
         }
         if (nextPage != null) guiBuilder.openGui(player, nextPage);
     }
@@ -79,18 +91,57 @@ public class GuiListener implements Listener {
         String currentPage = guiBuilder.getCurrentPage(player);
         Set<String> pages = guiBuilder.getAvailablePages();
         String prevPage = null;
-        String last = null;
-        for (String page : pages) {
-            if (page.equals(currentPage)) { prevPage = last; break; }
-            last = page;
+        List<String> pageList = new ArrayList<>(pages);
+        for (int i = 0; i < pageList.size(); i++) {
+            if (pageList.get(i).equals(currentPage) && i > 0) {
+                prevPage = pageList.get(i - 1);
+                break;
+            }
         }
         if (prevPage != null) guiBuilder.openGui(player, prevPage);
+    }
+
+    private void leaveRoom(Player player) {
+        Room currentRoom = roomService.getRoomByMember(player);
+        if (currentRoom == null) {
+            player.sendMessage(messages.getLeaveNotInRoom());
+            player.closeInventory();
+            return;
+        }
+
+        Location previousLocation = playerRoomManager.getPreviousLocation(player);
+
+        UUID newOwnerId = currentRoom.getNewOwnerAfterRemove(player);
+        roomService.leaveCurrentRoom(player);
+
+        if (newOwnerId != null && currentRoom.isPrivate()) {
+            Player newOwner = Bukkit.getPlayer(newOwnerId);
+            if (newOwner != null && newOwner.isOnline()) {
+                Map<String, String> placeholders = new HashMap<>();
+                placeholders.put("room", currentRoom.getRoomName());
+                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
+            }
+        }
+
+        playerRoomManager.removePlayer(player);
+        guiBuilder.refreshAllGuis();
+
+        if (previousLocation != null && previousLocation.getWorld() != null) {
+            player.teleport(previousLocation);
+        } else {
+            player.performCommand("spawn");
+        }
+
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("room", currentRoom.getRoomName());
+        player.sendMessage(messages.getLeaveSuccess(placeholders));
+        player.closeInventory();
     }
 
     private void handleRoomJoin(Player player, String roomName) {
         Room room = roomService.getRoom(roomName);
         if (room == null) {
-            player.sendMessage(messages.getMessage("join.room-not-found"));
+            player.sendMessage(messages.getJoinRoomNotFound());
             player.closeInventory();
             return;
         }
@@ -99,26 +150,22 @@ public class GuiListener implements Listener {
         if (currentRoom != null) {
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("room", currentRoom.getRoomName());
-            player.sendMessage(messages.getMessage("join.already-in-room", placeholders));
+            player.sendMessage(messages.getJoinAlreadyInRoom(placeholders));
             player.closeInventory();
             return;
         }
 
         if (!room.canJoin(player)) {
-            if (room.isPrivate()) player.sendMessage(messages.getMessage("join.private"));
-            else player.sendMessage(messages.getMessage("join.no-permission"));
+            if (room.isPrivate()) player.sendMessage(messages.getJoinPrivate());
+            else player.sendMessage(messages.getJoinNoPermission());
             player.closeInventory();
             return;
         }
 
         if (room.isFull()) {
-            if (player.hasPermission(configManager.getForceJoinPermission())) {
-                player.sendMessage(messages.getMessage("join.force-join"));
-            } else {
-                player.sendMessage(messages.getMessage("join.full"));
-                player.closeInventory();
-                return;
-            }
+            player.sendMessage(messages.getJoinFull());
+            player.closeInventory();
+            return;
         }
 
         if (roomService.joinRoom(player, roomName)) {
@@ -127,11 +174,11 @@ public class GuiListener implements Listener {
             player.teleport(room.getSpawnPoint());
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("room", room.getRoomName());
-            player.sendMessage(messages.getMessage("join.success", placeholders));
+            player.sendMessage(messages.getJoinSuccess(placeholders));
             guiBuilder.refreshAllGuis();
             player.closeInventory();
         } else {
-            player.sendMessage(messages.getMessage("join.error"));
+            player.sendMessage(messages.getJoinError());
         }
     }
 }

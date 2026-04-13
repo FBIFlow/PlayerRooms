@@ -4,6 +4,8 @@ permissions:
 
 world: "world_rooms"
 generate-test-rooms: false
+allowed-commands:
+  - spawn
 
 rooms:
   room1:
@@ -285,7 +287,7 @@ gui:
         37: { name: "", material: GRAY_STAINED_GLASS_PANE }
         38: { name: "", material: GRAY_STAINED_GLASS_PANE }
         39: { name: "Previous page", material: ARROW, action: previous-page }
-        40: { name: "", material: SPECTRAL_ARROW }
+        40: { name: "leave", material: SPECTRAL_ARROW, action: leave }
         41: { name: "Next page", material: ARROW, action: next-page }
         42: { name: "", material: GRAY_STAINED_GLASS_PANE }
         43: { name: "", material: GRAY_STAINED_GLASS_PANE }

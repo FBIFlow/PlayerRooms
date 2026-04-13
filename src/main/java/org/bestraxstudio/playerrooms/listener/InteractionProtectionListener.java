@@ -29,12 +29,16 @@ public class InteractionProtectionListener implements Listener {
         Room room = roomService.getRoomByMember(player);
         if (room == null) return;
         if (event.getClickedBlock() != null) {
+            Material blockType = event.getClickedBlock().getType();
+            if (blockType.name().contains("STAIRS") || blockType.name().contains("SLAB") || blockType.name().contains("CARPET")) {
+                return;
+            }
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-interact"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotInteract());
         }
         if (event.getItem() != null && isDangerousItem(event.getItem().getType())) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-use"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotUse());
         }
     }
 
@@ -43,7 +47,7 @@ public class InteractionProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-use"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotUse());
         }
     }
 
@@ -52,7 +56,7 @@ public class InteractionProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-use"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotUse());
         }
     }
 
@@ -61,7 +65,7 @@ public class InteractionProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-interact"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotInteract());
         }
     }
 
@@ -71,7 +75,7 @@ public class InteractionProtectionListener implements Listener {
         Player player = (Player) event.getRemover();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-break"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotBreak());
         }
     }
 
@@ -80,7 +84,7 @@ public class InteractionProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getMessage("protection.cannot-place"));
+            player.sendMessage(plugin.getMessages().getProtectionCannotPlace());
         }
     }
 

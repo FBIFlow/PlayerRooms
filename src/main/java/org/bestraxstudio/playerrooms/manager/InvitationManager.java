@@ -55,6 +55,16 @@ public class InvitationManager {
         }
     }
 
+    public void removeInvitationsFrom(Player inviter, Player invited) {
+        List<Invitation> invitations = playerInvitations.get(invited.getUniqueId());
+        if (invitations != null) {
+            invitations.removeIf(inv -> inv.getInviter().equals(inviter.getUniqueId()));
+            if (invitations.isEmpty()) {
+                playerInvitations.remove(invited.getUniqueId());
+            }
+        }
+    }
+
     public void removeAllInvitations(Player player) {
         playerInvitations.remove(player.getUniqueId());
     }

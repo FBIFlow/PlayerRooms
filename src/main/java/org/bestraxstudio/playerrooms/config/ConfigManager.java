@@ -136,4 +136,5 @@ public class ConfigManager {
     public String getSlotAction(String pageId, int slot) { return config.getString("gui.pages." + pageId + ".slots." + slot + ".action"); }
 
     public boolean isDisableFallDamage() { return config.getBoolean("protection.disable-fall-damage", true); }
+    public List<String> getAllowedCommands() { return config.getStringList("allowed-commands"); }
 }

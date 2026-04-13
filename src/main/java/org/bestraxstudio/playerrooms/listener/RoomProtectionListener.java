@@ -16,6 +16,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.projectiles.ProjectileSource;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class RoomProtectionListener implements Listener {
         if (!currentRoom.isInsideBounds(to)) {
             handlePlayerLeaveRoom(player, currentRoom);
             event.setCancelled(true);
+            player.teleport(player.getWorld().getSpawnLocation());
             player.teleport(currentRoom.getSpawnPoint());
         }
     }
@@ -59,11 +61,6 @@ public class RoomProtectionListener implements Listener {
         Location to = event.getTo();
         if (currentRoom.hasBounds() && !currentRoom.isInsideBounds(to)) {
             event.setCancelled(true);
-            player.sendMessage(messages.getMessage("protection.cannot-teleport"));
-        }
-        if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && currentRoom.hasBounds() && !currentRoom.isInsideBounds(to)) {
-            event.setCancelled(true);
-            player.sendMessage(messages.getMessage("protection.cannot-teleport"));
         }
     }
 
@@ -78,7 +75,6 @@ public class RoomProtectionListener implements Listener {
         if (currentRoom == null || !currentRoom.hasBounds()) return;
         if (!currentRoom.isInsideBounds(pearl.getLocation())) {
             pearl.remove();
-            player.sendMessage(messages.getMessage("protection.cannot-throw-pearl"));
         }
     }
 
@@ -88,6 +84,6 @@ public class RoomProtectionListener implements Listener {
         guiBuilder.refreshAllGuis();
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("room", room.getRoomName());
-        player.sendMessage(messages.getMessage("leave.bounds-exit", placeholders));
+        player.sendMessage(messages.getLeaveBoundsExit(placeholders));
     }
 }

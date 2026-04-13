@@ -5,6 +5,7 @@ import org.bestraxstudio.playerrooms.config.ConfigManager;
 import org.bestraxstudio.playerrooms.config.Messages;
 import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.listener.*;
+import org.bestraxstudio.playerrooms.manager.IgnoreListManager;
 import org.bestraxstudio.playerrooms.manager.InvitationManager;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.service.RoomService;
@@ -18,7 +19,9 @@ public class Loader extends JavaPlugin {
     private RoomService roomService;
     private PlayerRoomManager playerRoomManager;
     private InvitationManager invitationManager;
+    private IgnoreListManager ignoreListManager;
     private GuiBuilder guiBuilder;
+    private CommandBlocker commandBlocker;
 
     @Override
     public void onEnable() {
@@ -29,7 +32,9 @@ public class Loader extends JavaPlugin {
         this.roomService = new RoomService(this);
         this.playerRoomManager = new PlayerRoomManager();
         this.invitationManager = new InvitationManager();
+        this.ignoreListManager = new IgnoreListManager();
         this.guiBuilder = new GuiBuilder(this);
+        this.commandBlocker = new CommandBlocker(this);
 
         this.roomService.loadRoomsFromConfig();
 
@@ -43,21 +48,26 @@ public class Loader extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockProtectionListener(this), this);
         getServer().getPluginManager().registerEvents(new InteractionProtectionListener(this), this);
         getServer().getPluginManager().registerEvents(new PVPProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(commandBlocker, this);
 
         if (configManager.getGenerateTestRooms()) {
             TestRoomGenerator generator = new TestRoomGenerator(this);
             generator.generateAllRooms();
         }
 
-        getLogger().info(messages.getMessage("plugin.enabled",
-                java.util.Map.of("count", String.valueOf(roomService.getAllRooms().size()))));
+        getLogger().info(messages.getPluginEnabled(java.util.Map.of("count", String.valueOf(roomService.getAllRooms().size()))));
     }
 
     @Override
     public void onDisable() {
         if (playerRoomManager != null) playerRoomManager.clearAll();
         if (invitationManager != null) invitationManager.cleanup();
-        getLogger().info(messages.getMessage("plugin.disabled"));
+        if (ignoreListManager != null) ignoreListManager.clearAll();
+        getLogger().info(messages.getPluginDisabled());
+    }
+
+    public void reloadCommandBlocker() {
+        if (commandBlocker != null) commandBlocker.reloadAllowedCommands();
     }
 
     public static Loader getInstance() { return instance; }
@@ -66,5 +76,6 @@ public class Loader extends JavaPlugin {
     public RoomService getRoomService() { return roomService; }
     public PlayerRoomManager getPlayerRoomManager() { return playerRoomManager; }
     public InvitationManager getInvitationManager() { return invitationManager; }
+    public IgnoreListManager getIgnoreListManager() { return ignoreListManager; }
     public GuiBuilder getGuiBuilder() { return guiBuilder; }
 }

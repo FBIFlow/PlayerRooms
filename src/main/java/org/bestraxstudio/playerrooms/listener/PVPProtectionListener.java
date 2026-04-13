@@ -33,7 +33,7 @@ public class PVPProtectionListener implements Listener {
 
         if (attackerRoom != null && attackerRoom.equals(victimRoom)) {
             event.setCancelled(true);
-            attacker.sendMessage(plugin.getMessages().getMessage("protection.pvp-disabled"));
+            attacker.sendMessage(plugin.getMessages().getProtectionPvpDisabled());
         }
     }
 
@@ -50,7 +50,6 @@ public class PVPProtectionListener implements Listener {
                     cause == EntityDamageEvent.DamageCause.LAVA ||
                     cause == EntityDamageEvent.DamageCause.DROWNING) {
                 event.setCancelled(true);
-                player.sendMessage(plugin.getMessages().getMessage("protection.damage-prevented"));
             }
         }
     }

@@ -80,13 +80,27 @@ public class Room {
 
     public boolean removeMember(Player player) {
         boolean removed = members.remove(player.getUniqueId());
-        if (removed && isOwner(player) && !members.isEmpty()) this.owner = members.iterator().next();
+        if (removed && isOwner(player) && !members.isEmpty()) {
+            UUID newOwner = members.iterator().next();
+            this.owner = newOwner;
+        }
         if (members.isEmpty()) {
             this.isPrivate = false;
             this.owner = null;
             this.customMaxPlayers = this.maxPlayersDefault;
         }
         return removed;
+    }
+
+    public UUID getNewOwnerAfterRemove(Player player) {
+        if (isOwner(player) && members.size() > 1) {
+            for (UUID member : members) {
+                if (!member.equals(player.getUniqueId())) {
+                    return member;
+                }
+            }
+        }
+        return null;
     }
 
     public boolean isMember(Player player) { return members.contains(player.getUniqueId()); }

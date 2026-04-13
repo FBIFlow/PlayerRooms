@@ -1,11 +1,9 @@
 gui:
-  title: "&6Выбор комнаты"
   no-pages: "&cНет настроенных страниц!"
 
 join:
   success: "&aВы вошли в комнату &e{room}"
   full: "&cКомната заполнена! Попробуйте другую."
-  force-join: "&6Вы принудительно вошли в комнату &e{room} &6(игнорируя лимит)"
   no-permission: "&cУ вас нет доступа в эту комнату!"
   private: "&cКомната закрыта владельцем!"
   already-in-room: "&cВы уже находитесь в комнате &e{room}&c! Выйдите сначала (/room leave)"
@@ -22,20 +20,18 @@ info:
   current: "&aВы в комнате &e{room}&a. Игроки: &e{current}&a/&c{max}"
 
 command:
-  unknown: "&cНеизвестная команда. Используйте: /room leave, /room info, /room setprivate, /room invite, /room accept"
+  unknown: "&cНеизвестная команда. Используйте: /room leave, /room info, /room setprivate, /room invite, /room accept, /room ignore, /room unignore, /room ignorelist"
   only-players: "&cЭта команда только для игроков"
   no-permission: "&cУ вас нет прав на выполнение этой команды"
   reload-success: "&aКонфигурация перезагружена!"
+  blocked: "&cВы не можете использовать эту команду находясь в комнате!"
 
 protection:
   cannot-break: "&cВы не можете ломать блоки в комнате!"
   cannot-place: "&cВы не можете ставить блоки в комнате!"
   cannot-interact: "&cВы не можете взаимодействовать с блоками в комнате!"
   cannot-use: "&cВы не можете использовать этот предмет в комнате!"
-  cannot-teleport: "&cВы не можете телепортироваться за пределы комнаты!"
-  cannot-throw-pearl: "&cНельзя кидать эндер-жемчуг за пределы комнаты!"
   pvp-disabled: "&cPVP отключен в комнатах!"
-  damage-prevented: "&aУрон от окружающей среды отключен в комнате!"
 
 setprivate:
   invalid-argument: "&cИспользуйте: /room setprivate true/false"
@@ -53,6 +49,7 @@ invite:
   player-not-found: "&cИгрок не найден или не в сети!"
   cannot-invite-self: "&cВы не можете пригласить самого себя!"
   already-in-room: "&cИгрок &e{player} &cуже находится в комнате!"
+  player-ignored: "&cВы не можете пригласить этого игрока, так как он игнорирует вас!"
   sent: "&aВы пригласили игрока &e{player} &aв комнату &e{room}"
   received: "\n&6&l══════════════════════════════════\n&eИгрок &6{player} &eприглашает вас в комнату &6{room}&e!\n&7Приглашение действительно 30 секунд\n&6&l══════════════════════════════════"
   click-to-accept: "&aНажмите &e[ЗДЕСЬ] &aчтобы принять приглашение от &e{player}\n&7(/room accept {player})"
@@ -66,6 +63,22 @@ accept:
   inviter-offline: "&cПригласивший вас игрок вышел из игры!"
   room-not-found: "&cКомната, в которую вас пригласили, больше не существует!"
 
+ignore:
+  usage: "&cИспользуйте: /room ignore <игрок>"
+  player-not-found: "&cИгрок не найден или не в сети!"
+  cannot-ignore-self: "&cВы не можете игнорировать самого себя!"
+  already-ignored: "&cВы уже игнорируете игрока &e{player}&c!"
+  success: "&aВы больше не будете получать приглашения от игрока &e{player}"
+  list-empty: "&cВы никого не игнорируете!"
+  list-header: "&6&l══════════════════════════════════\n&eВаш список игнорируемых:"
+  list-entry: "&7- &e{player}"
+
+unignore:
+  usage: "&cИспользуйте: /room unignore <игрок>"
+  player-not-found: "&cИгрок не найден или не в сети!"
+  not-ignored: "&cВы не игнорируете игрока &e{player}&c!"
+  success: "&aВы снова будете получать приглашения от игрока &e{player}"
+
 plugin:
   enabled: "&aPlayerRooms включен! Загружено комнат: {count}"
   disabled: "&cPlayerRooms выключен!"
@@ -76,3 +89,6 @@ generator:
   missing-bounds: "Room {room} missing bounds, skipping"
   room-generated: "Generated room: {room}"
   all-generated: "All rooms generated!"
+
+owner:
+  transfer: "&eВы стали новым владельцем комнаты &6{room}&e!"

@@ -87,6 +87,7 @@ public class Messages {
     public String getInvitePlayerNotFound() { return getMessage("invite.player-not-found"); }
     public String getInviteCannotInviteSelf() { return getMessage("invite.cannot-invite-self"); }
     public String getInviteAlreadyInRoom(Map<String, String> placeholders) { return getMessage("invite.already-in-room", placeholders); }
+    public String getInvitePlayerIgnored() { return getMessage("invite.player-ignored"); }
     public String getInviteSent(Map<String, String> placeholders) { return getMessage("invite.sent", placeholders); }
     public String getInviteReceived(Map<String, String> placeholders) { return getMessage("invite.received", placeholders); }
     public String getInviteClickToAccept(Map<String, String> placeholders) { return getMessage("invite.click-to-accept", placeholders); }
@@ -98,6 +99,20 @@ public class Messages {
     public String getAcceptInvitationExpired() { return getMessage("accept.invitation-expired"); }
     public String getAcceptInviterOffline() { return getMessage("accept.inviter-offline"); }
     public String getAcceptRoomNotFound() { return getMessage("accept.room-not-found"); }
+
+    public String getIgnoreUsage() { return getMessage("ignore.usage"); }
+    public String getIgnorePlayerNotFound() { return getMessage("ignore.player-not-found"); }
+    public String getIgnoreCannotIgnoreSelf() { return getMessage("ignore.cannot-ignore-self"); }
+    public String getIgnoreAlreadyIgnored(Map<String, String> placeholders) { return getMessage("ignore.already-ignored", placeholders); }
+    public String getIgnoreSuccess(Map<String, String> placeholders) { return getMessage("ignore.success", placeholders); }
+    public String getIgnoreListEmpty() { return getMessage("ignore.list-empty"); }
+    public String getIgnoreListHeader() { return getMessage("ignore.list-header"); }
+    public String getIgnoreListEntry(Map<String, String> placeholders) { return getMessage("ignore.list-entry", placeholders); }
+
+    public String getUnignoreUsage() { return getMessage("unignore.usage"); }
+    public String getUnignorePlayerNotFound() { return getMessage("unignore.player-not-found"); }
+    public String getUnignoreNotIgnored(Map<String, String> placeholders) { return getMessage("unignore.not-ignored", placeholders); }
+    public String getUnignoreSuccess(Map<String, String> placeholders) { return getMessage("unignore.success", placeholders); }
 
     public String getPluginEnabled(Map<String, String> placeholders) { return getMessage("plugin.enabled", placeholders); }
     public String getPluginDisabled() { return getMessage("plugin.disabled"); }
