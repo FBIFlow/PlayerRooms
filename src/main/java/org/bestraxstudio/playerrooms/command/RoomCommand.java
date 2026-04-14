@@ -110,7 +110,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         UUID newOwnerId = currentRoom.getNewOwnerAfterRemove(player);
         roomService.leaveCurrentRoom(player);
 
-        if (newOwnerId != null && currentRoom.isPrivate()) {
+        if (newOwnerId != null) {
             Player newOwner = Bukkit.getPlayer(newOwnerId);
             if (newOwner != null && newOwner.isOnline()) {
                 Map<String, String> placeholders = new HashMap<>();

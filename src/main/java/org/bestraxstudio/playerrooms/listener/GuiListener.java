@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -35,14 +36,22 @@ public class GuiListener implements Listener {
         this.messages = plugin.getMessages();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player)) return;
         Player player = (Player) event.getWhoClicked();
+
         String currentPage = guiBuilder.getCurrentPage(player);
         if (currentPage == null) return;
 
+        if (event.getClickedInventory() == null) return;
+        if (event.getClickedInventory() != event.getView().getTopInventory()) {
+            event.setCancelled(true);
+            return;
+        }
+
         event.setCancelled(true);
+
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null || clicked.getType().isAir()) return;
 
@@ -74,31 +83,33 @@ public class GuiListener implements Listener {
     private void nextPage(Player player) {
         String currentPage = guiBuilder.getCurrentPage(player);
         Set<String> pages = guiBuilder.getAvailablePages();
-        boolean found = false;
-        String nextPage = null;
         List<String> pageList = new ArrayList<>(pages);
-        for (int i = 0; i < pageList.size(); i++) {
-            if (found) {
-                nextPage = pageList.get(i);
-                break;
-            }
-            if (pageList.get(i).equals(currentPage)) found = true;
+        Collections.sort(pageList);
+
+        int currentIndex = pageList.indexOf(currentPage);
+        if (currentIndex >= 0 && currentIndex < pageList.size() - 1) {
+            String nextPage = pageList.get(currentIndex + 1);
+            guiBuilder.setChangingPage(player, true);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                guiBuilder.openGui(player, nextPage);
+            }, 1L);
         }
-        if (nextPage != null) guiBuilder.openGui(player, nextPage);
     }
 
     private void previousPage(Player player) {
         String currentPage = guiBuilder.getCurrentPage(player);
         Set<String> pages = guiBuilder.getAvailablePages();
-        String prevPage = null;
         List<String> pageList = new ArrayList<>(pages);
-        for (int i = 0; i < pageList.size(); i++) {
-            if (pageList.get(i).equals(currentPage) && i > 0) {
-                prevPage = pageList.get(i - 1);
-                break;
-            }
+        Collections.sort(pageList);
+
+        int currentIndex = pageList.indexOf(currentPage);
+        if (currentIndex > 0) {
+            String prevPage = pageList.get(currentIndex - 1);
+            guiBuilder.setChangingPage(player, true);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                guiBuilder.openGui(player, prevPage);
+            }, 1L);
         }
-        if (prevPage != null) guiBuilder.openGui(player, prevPage);
     }
 
     private void leaveRoom(Player player) {
@@ -114,7 +125,7 @@ public class GuiListener implements Listener {
         UUID newOwnerId = currentRoom.getNewOwnerAfterRemove(player);
         roomService.leaveCurrentRoom(player);
 
-        if (newOwnerId != null && currentRoom.isPrivate()) {
+        if (newOwnerId != null) {
             Player newOwner = Bukkit.getPlayer(newOwnerId);
             if (newOwner != null && newOwner.isOnline()) {
                 Map<String, String> placeholders = new HashMap<>();

@@ -6,6 +6,7 @@ import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class RoomProtectionListener implements Listener {
 
@@ -48,7 +50,6 @@ public class RoomProtectionListener implements Listener {
             handlePlayerLeaveRoom(player, currentRoom);
             event.setCancelled(true);
             player.teleport(player.getWorld().getSpawnLocation());
-            player.teleport(currentRoom.getSpawnPoint());
         }
     }
 
@@ -79,9 +80,20 @@ public class RoomProtectionListener implements Listener {
     }
 
     private void handlePlayerLeaveRoom(Player player, Room room) {
+        UUID newOwnerId = room.getNewOwnerAfterRemove(player);
+
         roomService.leaveCurrentRoom(player);
         playerRoomManager.removePlayer(player);
         guiBuilder.refreshAllGuis();
+        if (newOwnerId != null) {
+            Player newOwner = Bukkit.getPlayer(newOwnerId);
+            if (newOwner != null && newOwner.isOnline()) {
+                Map<String, String> placeholders = new HashMap<>();
+                placeholders.put("room", room.getRoomName());
+                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
+            }
+        }
+
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("room", room.getRoomName());
         player.sendMessage(messages.getLeaveBoundsExit(placeholders));

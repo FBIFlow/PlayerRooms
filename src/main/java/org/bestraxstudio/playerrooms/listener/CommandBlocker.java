@@ -21,10 +21,12 @@ public class CommandBlocker implements Listener {
         this.plugin = plugin;
         this.roomService = plugin.getRoomService();
         this.allowedCommands = plugin.getConfigManager().getAllowedCommands();
+        this.allowedCommands.add("room");
     }
 
     public void reloadAllowedCommands() {
         this.allowedCommands = plugin.getConfigManager().getAllowedCommands();
+        this.allowedCommands.add("room");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -40,10 +42,8 @@ public class CommandBlocker implements Listener {
         String[] parts = command.split(" ");
         String baseCommand = parts[0];
 
-        for (String allowed : allowedCommands) {
-            if (baseCommand.equals(allowed.toLowerCase())) {
-                return;
-            }
+        if (allowedCommands.contains(baseCommand)) {
+            return;
         }
 
         event.setCancelled(true);

@@ -14,8 +14,8 @@ rooms:
     max: 30 42 30
     max-players-default: 4
     permissions:
-      join: playerrooms.player
-      make-private: playerrooms.player
+      join: all
+      make-private: all
   room2:
     spawn-point: 60 33 20
     min: 50 32 10
@@ -245,7 +245,7 @@ gui:
   pages:
     1:
       name: "#FF0000PlayerRooms"
-      size: 54
+      size: 45
       slots:
         0: { name: "", material: GRAY_STAINED_GLASS_PANE }
         1: { name: "", material: GRAY_STAINED_GLASS_PANE }
@@ -292,3 +292,10 @@ gui:
         42: { name: "", material: GRAY_STAINED_GLASS_PANE }
         43: { name: "", material: GRAY_STAINED_GLASS_PANE }
         44: { name: "", material: GRAY_STAINED_GLASS_PANE }
+    2:
+      name: "#FF0000PlayerRooms"
+      size: 45
+      slots:
+        39: { name: "Previous page", material: ARROW, action: previous-page }
+        40: { name: "leave", material: SPECTRAL_ARROW, action: leave }
+        41: { name: "Next page", material: ARROW, action: next-page }

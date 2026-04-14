@@ -25,6 +25,7 @@ public class GuiBuilder implements Listener {
     private final ConfigManager configManager;
     private final RoomService roomService;
     private final Map<UUID, String> playerPageMap;
+    private final Set<UUID> playersChangingPage;
     private static final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
 
     public GuiBuilder(Loader plugin) {
@@ -32,6 +33,7 @@ public class GuiBuilder implements Listener {
         this.configManager = plugin.getConfigManager();
         this.roomService = plugin.getRoomService();
         this.playerPageMap = new HashMap<>();
+        this.playersChangingPage = new HashSet<>();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -54,6 +56,14 @@ public class GuiBuilder implements Listener {
             if (playerPageMap.containsKey(player.getUniqueId()) && player.getOpenInventory() != null) {
                 refreshGui(player);
             }
+        }
+    }
+
+    public void setChangingPage(Player player, boolean changing) {
+        if (changing) {
+            playersChangingPage.add(player.getUniqueId());
+        } else {
+            playersChangingPage.remove(player.getUniqueId());
         }
     }
 
@@ -137,10 +147,25 @@ public class GuiBuilder implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player)) return;
         Player player = (Player) event.getPlayer();
+
+        if (playersChangingPage.contains(player.getUniqueId())) {
+            playersChangingPage.remove(player.getUniqueId());
+            return;
+        }
+
         playerPageMap.remove(player.getUniqueId());
     }
 
-    public String getCurrentPage(Player player) { return playerPageMap.get(player.getUniqueId()); }
-    public Set<String> getAvailablePages() { return configManager.getPageNames(); }
-    public void removePlayer(Player player) { playerPageMap.remove(player.getUniqueId()); }
+    public String getCurrentPage(Player player) {
+        return playerPageMap.get(player.getUniqueId());
+    }
+
+    public Set<String> getAvailablePages() {
+        return configManager.getPageNames();
+    }
+
+    public void removePlayer(Player player) {
+        playerPageMap.remove(player.getUniqueId());
+        playersChangingPage.remove(player.getUniqueId());
+    }
 }
