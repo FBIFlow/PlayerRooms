@@ -1,5 +1,7 @@
 package org.bestraxstudio.playerrooms.command;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.config.Messages;
 import org.bestraxstudio.playerrooms.manager.InvitationManager;
@@ -248,8 +250,8 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         targetPlaceholders.put("room", currentRoom.getRoomName());
         String inviteMessage = messages.getInviteReceived(targetPlaceholders);
         String clickMessage = messages.getInviteClickToAccept(targetPlaceholders);
+        target.sendMessage(Component.text(clickMessage).clickEvent(ClickEvent.runCommand("room accept " + player.getName())));
         target.sendMessage(inviteMessage);
-        target.sendMessage(clickMessage);
     }
 
     private void acceptInvitation(Player player, String[] args) {
@@ -295,7 +297,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        if (room.isFull()) {
+        if (room.isFull() && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) {
             player.sendMessage(messages.getJoinFull());
             invitationManager.removeInvitation(player, invitation);
             return;

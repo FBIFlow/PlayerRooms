@@ -1,5 +1,6 @@
 package org.bestraxstudio.playerrooms.model;
 
+import org.bestraxstudio.playerrooms.Loader;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import java.util.HashSet;
@@ -61,17 +62,17 @@ public class Room {
     public boolean isOwner(Player player) { return owner != null && owner.equals(player.getUniqueId()); }
 
     public boolean canJoin(Player player) {
-        if (isPrivate && !isOwner(player)) return false;
-        return joinPermission.equalsIgnoreCase("all") || player.hasPermission(joinPermission);
+        if (isPrivate && !isOwner(player) && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) return false;
+        return joinPermission.equalsIgnoreCase("all") || player.hasPermission(joinPermission) || player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission());
     }
 
     public boolean addMember(Player player) { return addMember(player, false); }
 
     public boolean addMember(Player player, boolean force) {
         if (!force) {
-            if (isPrivate && !isOwner(player)) return false;
+            if (isPrivate && !isOwner(player) && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) return false;
             if (!joinPermission.equalsIgnoreCase("all") && !player.hasPermission(joinPermission)) return false;
-            if (isFull()) return false;
+            if (isFull() && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) return false;
         }
         boolean added = members.add(player.getUniqueId());
         if (added && members.size() == 1 && owner == null) this.owner = player.getUniqueId();

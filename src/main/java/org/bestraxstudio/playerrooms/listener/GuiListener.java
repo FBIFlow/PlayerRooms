@@ -173,7 +173,7 @@ public class GuiListener implements Listener {
             return;
         }
 
-        if (room.isFull()) {
+        if (room.isFull() && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) {
             player.sendMessage(messages.getJoinFull());
             player.closeInventory();
             return;

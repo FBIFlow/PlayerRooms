@@ -45,10 +45,24 @@ public class GuiBuilder implements Listener {
 
     public void refreshGui(Player player) {
         String currentPage = playerPageMap.get(player.getUniqueId());
-        if (currentPage != null && player.getOpenInventory() != null) {
-            Inventory newInventory = buildPage(player, currentPage);
-            player.openInventory(newInventory);
+        if (currentPage == null) return;
+
+        Inventory topInventory = player.getOpenInventory().getTopInventory();
+
+        ConfigurationSection slots = configManager.getPageSlots(currentPage);
+        if (slots == null) return;
+
+        for (String slotKey : slots.getKeys(false)) {
+            try {
+                int slot = Integer.parseInt(slotKey);
+                ItemStack newItem = buildSlotItem(player, currentPage, slot);
+                if (newItem != null) {
+                    topInventory.setItem(slot, newItem);
+                }
+            } catch (NumberFormatException ignored) {}
         }
+
+        player.updateInventory();
     }
 
     public void refreshAllGuis() {
