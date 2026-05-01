@@ -7,6 +7,7 @@ import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -115,7 +116,7 @@ public class GuiListener implements Listener {
     private void leaveRoom(Player player) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(messages.getLeaveNotInRoom());
+            player.sendMessage(ComponentUtil.updateString(messages.getLeaveNotInRoom()));
             player.closeInventory();
             return;
         }
@@ -130,7 +131,7 @@ public class GuiListener implements Listener {
             if (newOwner != null && newOwner.isOnline()) {
                 Map<String, String> placeholders = new HashMap<>();
                 placeholders.put("room", currentRoom.getRoomName());
-                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
+                newOwner.sendMessage(ComponentUtil.updateString(messages.getOwnerTransfer(placeholders)));
             }
         }
 
@@ -145,14 +146,14 @@ public class GuiListener implements Listener {
 
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("room", currentRoom.getRoomName());
-        player.sendMessage(messages.getLeaveSuccess(placeholders));
+        player.sendMessage(ComponentUtil.updateString(messages.getLeaveSuccess(placeholders)));
         player.closeInventory();
     }
 
     private void handleRoomJoin(Player player, String roomName) {
         Room room = roomService.getRoom(roomName);
         if (room == null) {
-            player.sendMessage(messages.getJoinRoomNotFound());
+            player.sendMessage(ComponentUtil.updateString(messages.getJoinRoomNotFound()));
             player.closeInventory();
             return;
         }
@@ -161,20 +162,20 @@ public class GuiListener implements Listener {
         if (currentRoom != null) {
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("room", currentRoom.getRoomName());
-            player.sendMessage(messages.getJoinAlreadyInRoom(placeholders));
+            player.sendMessage(ComponentUtil.updateString(messages.getJoinAlreadyInRoom(placeholders)));
             player.closeInventory();
             return;
         }
 
         if (!room.canJoin(player)) {
-            if (room.isPrivate()) player.sendMessage(messages.getJoinPrivate());
-            else player.sendMessage(messages.getJoinNoPermission());
+            if (room.isPrivate()) player.sendMessage(ComponentUtil.updateString(messages.getJoinPrivate()));
+            else player.sendMessage(ComponentUtil.updateString(messages.getJoinNoPermission()));
             player.closeInventory();
             return;
         }
 
         if (room.isFull() && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) {
-            player.sendMessage(messages.getJoinFull());
+            player.sendMessage(ComponentUtil.updateString(messages.getJoinFull()));
             player.closeInventory();
             return;
         }
@@ -185,11 +186,11 @@ public class GuiListener implements Listener {
             player.teleport(room.getSpawnPoint());
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("room", room.getRoomName());
-            player.sendMessage(messages.getJoinSuccess(placeholders));
+            player.sendMessage(ComponentUtil.updateString(messages.getJoinSuccess(placeholders)));
             guiBuilder.refreshAllGuis();
             player.closeInventory();
         } else {
-            player.sendMessage(messages.getJoinError());
+            player.sendMessage(ComponentUtil.updateString(messages.getJoinError()));
         }
     }
 }

@@ -6,6 +6,7 @@ import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderPearl;
@@ -90,12 +91,12 @@ public class RoomProtectionListener implements Listener {
             if (newOwner != null && newOwner.isOnline()) {
                 Map<String, String> placeholders = new HashMap<>();
                 placeholders.put("room", room.getRoomName());
-                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
+                newOwner.sendMessage(ComponentUtil.updateString(messages.getOwnerTransfer(placeholders)));
             }
         }
 
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("room", room.getRoomName());
-        player.sendMessage(messages.getLeaveBoundsExit(placeholders));
+        player.sendMessage(ComponentUtil.updateString(messages.getLeaveBoundsExit(placeholders)));
     }
 }

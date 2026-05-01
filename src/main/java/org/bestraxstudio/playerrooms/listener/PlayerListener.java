@@ -6,6 +6,7 @@ import org.bestraxstudio.playerrooms.manager.InvitationManager;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,7 +45,7 @@ public class PlayerListener implements Listener {
                 if (newOwner != null && newOwner.isOnline()) {
                     Map<String, String> placeholders = new HashMap<>();
                     placeholders.put("room", currentRoom.getRoomName());
-                    newOwner.sendMessage(plugin.getMessages().getOwnerTransfer(placeholders));
+                    newOwner.sendMessage(ComponentUtil.updateString(plugin.getMessages().getOwnerTransfer(placeholders)));
                 }
             }
 

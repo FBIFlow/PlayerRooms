@@ -3,6 +3,7 @@ package org.bestraxstudio.playerrooms.listener;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,6 +48,6 @@ public class CommandBlocker implements Listener {
         }
 
         event.setCancelled(true);
-        player.sendMessage(plugin.getMessages().getCommandBlocked());
+        player.sendMessage(ComponentUtil.updateString(plugin.getMessages().getCommandBlocked()));
     }
 }

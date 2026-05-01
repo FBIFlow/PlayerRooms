@@ -3,6 +3,7 @@ package org.bestraxstudio.playerrooms.listener;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,7 +26,7 @@ public class BlockProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getProtectionCannotBreak());
+            player.sendMessage(ComponentUtil.updateString(plugin.getMessages().getProtectionCannotBreak()));
         }
     }
 
@@ -35,7 +36,7 @@ public class BlockProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(plugin.getMessages().getProtectionCannotPlace());
+            player.sendMessage(ComponentUtil.updateString(plugin.getMessages().getProtectionCannotPlace()));
         }
     }
 

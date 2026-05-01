@@ -3,6 +3,7 @@ package org.bestraxstudio.playerrooms.listener;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.model.Room;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,7 +34,7 @@ public class PVPProtectionListener implements Listener {
 
         if (attackerRoom != null && attackerRoom.equals(victimRoom)) {
             event.setCancelled(true);
-            attacker.sendMessage(plugin.getMessages().getProtectionPvpDisabled());
+            attacker.sendMessage(ComponentUtil.updateString(plugin.getMessages().getProtectionPvpDisabled()));
         }
     }
 
