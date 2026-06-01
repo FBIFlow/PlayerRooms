@@ -60,7 +60,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission(plugin.getConfigManager().getAdminPermission())) {
                     reloadConfig(player);
                 } else {
-                    player.sendMessage(ComponentUtil.updateString(messages.getCommandNoPermission()));
+                    player.sendMessage((messages.getCommandNoPermission()));
                 }
                 break;
             case "info":
@@ -85,7 +85,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
                 showIgnoreList(player);
                 break;
             default:
-                player.sendMessage(ComponentUtil.updateString(messages.getCommandUnknown()));
+                player.sendMessage((messages.getCommandUnknown()));
                 break;
         }
         return true;
@@ -97,14 +97,14 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         if (firstPage != null) {
             plugin.getGuiBuilder().openGui(player, firstPage);
         } else {
-            player.sendMessage(ComponentUtil.updateString(messages.getGuiNoPages()));
+            player.sendMessage((messages.getGuiNoPages()));
         }
     }
 
     private void leaveRoom(Player player) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getLeaveNotInRoom()));
+            player.sendMessage((messages.getLeaveNotInRoom()));
             return;
         }
 
@@ -116,8 +116,8 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         if (newOwnerId != null) {
             Player newOwner = Bukkit.getPlayer(newOwnerId);
             if (newOwner != null && newOwner.isOnline()) {
-                Map<String, String> placeholders = new HashMap<>();
-                placeholders.put("room", currentRoom.getRoomName());
+                Map<String, Component> placeholders = new HashMap<>();
+                placeholders.put("room", ComponentUtil.updateString( currentRoom.getRoomName()));
                 newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
             }
         }
@@ -132,9 +132,9 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             player.teleport(spawn);
         }
 
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("room", currentRoom.getRoomName());
-        player.sendMessage(ComponentUtil.updateString(messages.getLeaveSuccess(placeholders)));
+        Map<String, Component> placeholders = new HashMap<>();
+        placeholders.put("room", ComponentUtil.updateString(currentRoom.getRoomName()) );
+        player.sendMessage((messages.getLeaveSuccess(placeholders)));
     }
 
     private void reloadConfig(Player player) {
@@ -143,38 +143,39 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         roomService.loadRoomsFromConfig();
         plugin.getGuiBuilder().refreshAllGuis();
         plugin.reloadCommandBlocker();
-        player.sendMessage(ComponentUtil.updateString(messages.getCommandReloadSuccess()));
+        player.sendMessage((messages.getCommandReloadSuccess()));
     }
 
     private void showInfo(Player player) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getInfoNotInRoom()));
+            player.sendMessage((messages.getInfoNotInRoom()));
             return;
         }
 
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("room", currentRoom.getRoomName());
-        placeholders.put("current", String.valueOf(currentRoom.getCurrentPlayers()));
-        placeholders.put("max", String.valueOf(currentRoom.getMaxPlayers()));
-        player.sendMessage(ComponentUtil.updateString(messages.getInfoCurrent(placeholders)));
+        Map<String, Component> placeholders = new HashMap<>();
+
+        placeholders.put("room", ComponentUtil.updateString(currentRoom.getRoomName()) );
+        placeholders.put("current", ComponentUtil.updateString(String.valueOf(currentRoom.getCurrentPlayers())) );
+        placeholders.put("max", ComponentUtil.updateString(String.valueOf(currentRoom.getMaxPlayers())) );
+        player.sendMessage((messages.getInfoCurrent(placeholders)));
     }
 
     private void setPrivate(Player player, String[] args) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getSetprivateNotInRoom()));
+            player.sendMessage((messages.getSetprivateNotInRoom()));
             return;
         }
 
         if (!currentRoom.isOwner(player)) {
-            player.sendMessage(ComponentUtil.updateString(messages.getSetprivateNotOwner()));
+            player.sendMessage((messages.getSetprivateNotOwner()));
             return;
         }
 
         String requiredPerm = currentRoom.getMakePrivatePermission();
         if (!requiredPerm.equalsIgnoreCase("all") && !player.hasPermission(requiredPerm)) {
-            player.sendMessage(ComponentUtil.updateString(messages.getSetprivateNoPermission()));
+            player.sendMessage((messages.getSetprivateNoPermission()));
             return;
         }
 
@@ -185,7 +186,7 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             } else if (args[1].equalsIgnoreCase("false") || args[1].equalsIgnoreCase("off")) {
                 newState = false;
             } else {
-                player.sendMessage(ComponentUtil.updateString(messages.getSetprivateInvalidArgument()));
+                player.sendMessage((messages.getSetprivateInvalidArgument()));
                 return;
             }
         } else {
@@ -195,50 +196,50 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         roomService.setRoomPrivate(player, currentRoom.getRoomName(), newState);
         plugin.getGuiBuilder().refreshAllGuis();
 
-        Map<String, String> placeholders = new HashMap<>();
+        Map<String, Component> placeholders = new HashMap<>();
         placeholders.put("state", newState ? messages.getSetprivateClosedState() : messages.getSetprivateOpenedState());
-        player.sendMessage(ComponentUtil.updateString(messages.getSetprivateSuccess(placeholders)));
+        player.sendMessage((messages.getSetprivateSuccess(placeholders)));
     }
 
     private void invitePlayer(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(ComponentUtil.updateString(messages.getInviteUsage()));
+            player.sendMessage((messages.getInviteUsage()));
             return;
         }
 
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getInviteNotInRoom()));
+            player.sendMessage((messages.getInviteNotInRoom()));
             return;
         }
 
         if (!currentRoom.isOwner(player)) {
-            player.sendMessage(ComponentUtil.updateString(messages.getInviteNotOwner()));
+            player.sendMessage((messages.getInviteNotOwner()));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[1]);
         if (target == null || !target.isOnline()) {
-            player.sendMessage(ComponentUtil.updateString(messages.getInvitePlayerNotFound()));
+            player.sendMessage((messages.getInvitePlayerNotFound()));
             return;
         }
 
         if (target.equals(player)) {
-            player.sendMessage(ComponentUtil.updateString(messages.getInviteCannotInviteSelf()));
+            player.sendMessage((messages.getInviteCannotInviteSelf()));
             return;
         }
 
         if (roomService.getRoomByMember(target) != null) {
-            Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("player", target.getName());
-            player.sendMessage(ComponentUtil.updateString(messages.getInviteAlreadyInRoom(placeholders)));
+            Map<String, Component> placeholders = new HashMap<>();
+            placeholders.put("player", ComponentUtil.updateString(target.getName()));
+            player.sendMessage((messages.getInviteAlreadyInRoom(placeholders)));
             return;
         }
 
-        Map<String, String> inviterPlaceholders = new HashMap<>();
-        inviterPlaceholders.put("player", target.getName());
-        inviterPlaceholders.put("room", currentRoom.getRoomName());
-        player.sendMessage(ComponentUtil.updateString(messages.getInviteSent(inviterPlaceholders)));
+        Map<String, Component> inviterPlaceholders = new HashMap<>();
+        inviterPlaceholders.put("player", ComponentUtil.updateString(target.getName()));
+        inviterPlaceholders.put("room", ComponentUtil.updateString(currentRoom.getRoomName()));
+        player.sendMessage((messages.getInviteSent(inviterPlaceholders)));
 
         if (plugin.getIgnoreListManager().isIgnored(target, player)) {
             return;
@@ -246,18 +247,18 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
 
         invitationManager.createInvitation(player, target, currentRoom.getRoomName());
 
-        Map<String, String> targetPlaceholders = new HashMap<>();
-        targetPlaceholders.put("player", player.getName());
-        targetPlaceholders.put("room", currentRoom.getRoomName());
-        String inviteMessage = messages.getInviteReceived(targetPlaceholders);
-        String clickMessage = messages.getInviteClickToAccept(targetPlaceholders);
-        target.sendMessage(ComponentUtil.updateString(clickMessage).clickEvent(ClickEvent.runCommand("room accept " + player.getName())));
-        target.sendMessage(ComponentUtil.updateString(inviteMessage));
+        Map<String, Component> targetPlaceholders = new HashMap<>();
+        targetPlaceholders.put("player", ComponentUtil.updateString(player.getName()));
+        targetPlaceholders.put("room", ComponentUtil.updateString(currentRoom.getRoomName()));
+        Component inviteMessage = messages.getInviteReceived(targetPlaceholders);
+        Component clickMessage = messages.getInviteClickToAccept(targetPlaceholders);
+        target.sendMessage((clickMessage).clickEvent(ClickEvent.runCommand("room accept " + player.getName())));
+        target.sendMessage((inviteMessage));
     }
 
     private void acceptInvitation(Player player, String[] args) {
         if (roomService.getRoomByMember(player) != null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getAcceptAlreadyInRoom()));
+            player.sendMessage((messages.getAcceptAlreadyInRoom()));
             return;
         }
 
@@ -265,41 +266,41 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
         if (args.length >= 2) {
             invitation = invitationManager.getInvitationFrom(player, args[1]);
             if (invitation == null) {
-                Map<String, String> placeholders = new HashMap<>();
-                placeholders.put("player", args[1]);
-                player.sendMessage(ComponentUtil.updateString(messages.getAcceptInvitationNotFound(placeholders)));
+                Map<String, Component> placeholders = new HashMap<>();
+                placeholders.put("player", ComponentUtil.updateString(args[1]));
+                player.sendMessage((messages.getAcceptInvitationNotFound(placeholders)));
                 return;
             }
         } else {
             invitation = invitationManager.getLatestInvitation(player);
             if (invitation == null) {
-                player.sendMessage(ComponentUtil.updateString(messages.getAcceptNoInvitations()));
+                player.sendMessage((messages.getAcceptNoInvitations()));
                 return;
             }
         }
 
         if (invitation.isExpired()) {
             invitationManager.removeInvitation(player, invitation);
-            player.sendMessage(ComponentUtil.updateString(messages.getAcceptInvitationExpired()));
+            player.sendMessage((messages.getAcceptInvitationExpired()));
             return;
         }
 
         Player inviter = Bukkit.getPlayer(invitation.getInviter());
         if (inviter == null || !inviter.isOnline()) {
-            player.sendMessage(ComponentUtil.updateString(messages.getAcceptInviterOffline()));
+            player.sendMessage((messages.getAcceptInviterOffline()));
             invitationManager.removeInvitation(player, invitation);
             return;
         }
 
         Room room = roomService.getRoom(invitation.getRoomName());
         if (room == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getAcceptRoomNotFound()));
+            player.sendMessage((messages.getAcceptRoomNotFound()));
             invitationManager.removeInvitation(player, invitation);
             return;
         }
 
         if (room.isFull() && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) {
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinFull()));
+            player.sendMessage((messages.getJoinFull()));
             invitationManager.removeInvitation(player, invitation);
             return;
         }
@@ -309,92 +310,92 @@ public class RoomCommand implements CommandExecutor, TabCompleter {
             playerRoomManager.setPlayerRoom(player, invitation.getRoomName());
             player.teleport(room.getSpawnPoint());
 
-            Map<String, String> joinPlaceholders = new HashMap<>();
-            joinPlaceholders.put("room", room.getRoomName());
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinSuccess(joinPlaceholders)));
+            Map<String, Component> joinPlaceholders = new HashMap<>();
+            joinPlaceholders.put("room", ComponentUtil.updateString(room.getRoomName()));
+            player.sendMessage((messages.getJoinSuccess(joinPlaceholders)));
 
-            Map<String, String> inviterPlaceholders = new HashMap<>();
-            inviterPlaceholders.put("player", player.getName());
-            inviterPlaceholders.put("room", room.getRoomName());
+            Map<String, Component> inviterPlaceholders = new HashMap<>();
+            inviterPlaceholders.put("player", ComponentUtil.updateString(player.getName()));
+            inviterPlaceholders.put("room", ComponentUtil.updateString(room.getRoomName()));
             inviter.sendMessage(messages.getInvitePlayerJoined(inviterPlaceholders));
 
             plugin.getGuiBuilder().refreshAllGuis();
             invitationManager.removeInvitation(player, invitation);
         } else {
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinError()));
+            player.sendMessage((messages.getJoinError()));
         }
     }
 
     private void ignorePlayer(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(ComponentUtil.updateString(messages.getIgnoreUsage()));
+            player.sendMessage((messages.getIgnoreUsage()));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[1]);
         if (target == null || !target.isOnline()) {
-            player.sendMessage(ComponentUtil.updateString(messages.getIgnorePlayerNotFound()));
+            player.sendMessage((messages.getIgnorePlayerNotFound()));
             return;
         }
 
         if (target.equals(player)) {
-            player.sendMessage(ComponentUtil.updateString(messages.getIgnoreCannotIgnoreSelf()));
+            player.sendMessage((messages.getIgnoreCannotIgnoreSelf()));
             return;
         }
 
         if (plugin.getIgnoreListManager().isIgnored(player, target)) {
-            Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("player", target.getName());
-            player.sendMessage(ComponentUtil.updateString(messages.getIgnoreAlreadyIgnored(placeholders)));
+            Map<String, Component> placeholders = new HashMap<>();
+            placeholders.put("player", ComponentUtil.updateString(target.getName()));
+            player.sendMessage((messages.getIgnoreAlreadyIgnored(placeholders)));
             return;
         }
 
         plugin.getIgnoreListManager().addIgnore(player, target);
         invitationManager.removeInvitationsFrom(player, target);
 
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("player", target.getName());
-        player.sendMessage(ComponentUtil.updateString(messages.getIgnoreSuccess(placeholders)));
+        Map<String, Component> placeholders = new HashMap<>();
+        placeholders.put("player", ComponentUtil.updateString(target.getName()));
+        player.sendMessage((messages.getIgnoreSuccess(placeholders)));
     }
 
     private void unignorePlayer(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(ComponentUtil.updateString(messages.getUnignoreUsage()));
+            player.sendMessage((messages.getUnignoreUsage()));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[1]);
         if (target == null || !target.isOnline()) {
-            player.sendMessage(ComponentUtil.updateString(messages.getUnignorePlayerNotFound()));
+            player.sendMessage((messages.getUnignorePlayerNotFound()));
             return;
         }
 
         if (!plugin.getIgnoreListManager().isIgnored(player, target)) {
-            Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("player", target.getName());
-            player.sendMessage(ComponentUtil.updateString(messages.getUnignoreNotIgnored(placeholders)));
+            Map<String, Component> placeholders = new HashMap<>();
+            placeholders.put("player", ComponentUtil.updateString(target.getName()));
+            player.sendMessage((messages.getUnignoreNotIgnored(placeholders)));
             return;
         }
 
         plugin.getIgnoreListManager().removeIgnore(player, target);
 
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("player", target.getName());
-        player.sendMessage(ComponentUtil.updateString(messages.getUnignoreSuccess(placeholders)));
+        Map<String, Component> placeholders = new HashMap<>();
+        placeholders.put("player", ComponentUtil.updateString(target.getName()));
+        player.sendMessage((messages.getUnignoreSuccess(placeholders)));
     }
 
     private void showIgnoreList(Player player) {
         List<String> ignored = plugin.getIgnoreListManager().getIgnoreList(player);
         if (ignored.isEmpty()) {
-            player.sendMessage(ComponentUtil.updateString(messages.getIgnoreListEmpty()));
+            player.sendMessage((messages.getIgnoreListEmpty()));
             return;
         }
 
-        player.sendMessage(ComponentUtil.updateString(messages.getIgnoreListHeader()));
+        player.sendMessage((messages.getIgnoreListHeader()));
         for (String name : ignored) {
-            Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("player", name);
-            player.sendMessage(ComponentUtil.updateString(messages.getIgnoreListEntry(placeholders)));
+            Map<String, Component> placeholders = new HashMap<>();
+            placeholders.put("player", ComponentUtil.updateString(name));
+            player.sendMessage((messages.getIgnoreListEntry(placeholders)));
         }
     }
 
