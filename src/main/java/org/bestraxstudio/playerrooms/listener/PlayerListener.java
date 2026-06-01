@@ -1,5 +1,6 @@
 package org.bestraxstudio.playerrooms.listener;
 
+import net.kyori.adventure.text.Component;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.gui.GuiBuilder;
 import org.bestraxstudio.playerrooms.manager.InvitationManager;
@@ -43,9 +44,9 @@ public class PlayerListener implements Listener {
             if (newOwnerId != null && currentRoom.isPrivate()) {
                 Player newOwner = Bukkit.getPlayer(newOwnerId);
                 if (newOwner != null && newOwner.isOnline()) {
-                    Map<String, String> placeholders = new HashMap<>();
-                    placeholders.put("room", currentRoom.getRoomName());
-                    newOwner.sendMessage(ComponentUtil.updateString(plugin.getMessages().getOwnerTransfer(placeholders)));
+                    Map<String, Component> placeholders = new HashMap<>();
+                    placeholders.put("room", ComponentUtil.updateString( currentRoom.getRoomName()));
+                    newOwner.sendMessage(plugin.getMessages().getOwnerTransfer(placeholders));
                 }
             }
 

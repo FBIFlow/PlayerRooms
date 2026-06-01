@@ -1,5 +1,6 @@
 package org.bestraxstudio.playerrooms.listener;
 
+import net.kyori.adventure.text.Component;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.config.Messages;
 import org.bestraxstudio.playerrooms.gui.GuiBuilder;
@@ -89,14 +90,14 @@ public class RoomProtectionListener implements Listener {
         if (newOwnerId != null) {
             Player newOwner = Bukkit.getPlayer(newOwnerId);
             if (newOwner != null && newOwner.isOnline()) {
-                Map<String, String> placeholders = new HashMap<>();
-                placeholders.put("room", room.getRoomName());
-                newOwner.sendMessage(ComponentUtil.updateString(messages.getOwnerTransfer(placeholders)));
+                Map<String, Component> placeholders = new HashMap<>();
+                placeholders.put("room", ComponentUtil.updateString( room.getRoomName()));
+                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
             }
         }
 
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("room", room.getRoomName());
-        player.sendMessage(ComponentUtil.updateString(messages.getLeaveBoundsExit(placeholders)));
+        Map<String, Component> placeholders = new HashMap<>();
+        placeholders.put("room", ComponentUtil.updateString(room.getRoomName()));
+        player.sendMessage(messages.getLeaveBoundsExit(placeholders));
     }
 }

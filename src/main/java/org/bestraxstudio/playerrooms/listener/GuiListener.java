@@ -1,5 +1,6 @@
 package org.bestraxstudio.playerrooms.listener;
 
+import net.kyori.adventure.text.Component;
 import org.bestraxstudio.playerrooms.Loader;
 import org.bestraxstudio.playerrooms.config.ConfigManager;
 import org.bestraxstudio.playerrooms.config.Messages;
@@ -116,7 +117,7 @@ public class GuiListener implements Listener {
     private void leaveRoom(Player player) {
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getLeaveNotInRoom()));
+            player.sendMessage(messages.getLeaveNotInRoom());
             player.closeInventory();
             return;
         }
@@ -129,9 +130,9 @@ public class GuiListener implements Listener {
         if (newOwnerId != null) {
             Player newOwner = Bukkit.getPlayer(newOwnerId);
             if (newOwner != null && newOwner.isOnline()) {
-                Map<String, String> placeholders = new HashMap<>();
-                placeholders.put("room", currentRoom.getRoomName());
-                newOwner.sendMessage(ComponentUtil.updateString(messages.getOwnerTransfer(placeholders)));
+                Map<String, Component> placeholders = new HashMap<>();
+                placeholders.put("room", ComponentUtil.updateString(currentRoom.getRoomName()));
+                newOwner.sendMessage(messages.getOwnerTransfer(placeholders));
             }
         }
 
@@ -144,38 +145,38 @@ public class GuiListener implements Listener {
             player.performCommand("spawn");
         }
 
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("room", currentRoom.getRoomName());
-        player.sendMessage(ComponentUtil.updateString(messages.getLeaveSuccess(placeholders)));
+        Map<String, Component> placeholders = new HashMap<>();
+        placeholders.put("room", ComponentUtil.updateString( currentRoom.getRoomName()));
+        player.sendMessage(messages.getLeaveSuccess(placeholders));
         player.closeInventory();
     }
 
     private void handleRoomJoin(Player player, String roomName) {
         Room room = roomService.getRoom(roomName);
         if (room == null) {
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinRoomNotFound()));
+            player.sendMessage(messages.getJoinRoomNotFound());
             player.closeInventory();
             return;
         }
 
         Room currentRoom = roomService.getRoomByMember(player);
         if (currentRoom != null) {
-            Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("room", currentRoom.getRoomName());
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinAlreadyInRoom(placeholders)));
+            Map<String, Component> placeholders = new HashMap<>();
+            placeholders.put("room", ComponentUtil.updateString( currentRoom.getRoomName()));
+            player.sendMessage(messages.getJoinAlreadyInRoom(placeholders));
             player.closeInventory();
             return;
         }
 
         if (!room.canJoin(player)) {
-            if (room.isPrivate()) player.sendMessage(ComponentUtil.updateString(messages.getJoinPrivate()));
-            else player.sendMessage(ComponentUtil.updateString(messages.getJoinNoPermission()));
+            if (room.isPrivate()) player.sendMessage(messages.getJoinPrivate());
+            else player.sendMessage(messages.getJoinNoPermission());
             player.closeInventory();
             return;
         }
 
         if (room.isFull() && !player.hasPermission(Loader.getInstance().getConfigManager().getForceJoinPermission())) {
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinFull()));
+            player.sendMessage(messages.getJoinFull());
             player.closeInventory();
             return;
         }
@@ -184,13 +185,13 @@ public class GuiListener implements Listener {
             playerRoomManager.setPreviousLocation(player, player.getLocation());
             playerRoomManager.setPlayerRoom(player, roomName);
             player.teleport(room.getSpawnPoint());
-            Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("room", room.getRoomName());
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinSuccess(placeholders)));
+            Map<String, Component> placeholders = new HashMap<>();
+            placeholders.put("room", ComponentUtil.updateString( room.getRoomName()));
+            player.sendMessage(messages.getJoinSuccess(placeholders));
             guiBuilder.refreshAllGuis();
             player.closeInventory();
         } else {
-            player.sendMessage(ComponentUtil.updateString(messages.getJoinError()));
+            player.sendMessage(messages.getJoinError());
         }
     }
 }

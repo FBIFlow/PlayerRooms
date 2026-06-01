@@ -48,6 +48,6 @@ public class CommandBlocker implements Listener {
         }
 
         event.setCancelled(true);
-        player.sendMessage(ComponentUtil.updateString(plugin.getMessages().getCommandBlocked()));
+        player.sendMessage(plugin.getMessages().getCommandBlocked());
     }
 }

@@ -26,7 +26,7 @@ public class BlockProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(ComponentUtil.updateString(plugin.getMessages().getProtectionCannotBreak()));
+            player.sendMessage(plugin.getMessages().getProtectionCannotBreak());
         }
     }
 
@@ -36,7 +36,7 @@ public class BlockProtectionListener implements Listener {
         Player player = event.getPlayer();
         if (roomService.getRoomByMember(player) != null) {
             event.setCancelled(true);
-            player.sendMessage(ComponentUtil.updateString(plugin.getMessages().getProtectionCannotPlace()));
+            player.sendMessage(plugin.getMessages().getProtectionCannotPlace());
         }
     }
 

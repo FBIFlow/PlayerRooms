@@ -9,6 +9,7 @@ import org.bestraxstudio.playerrooms.manager.IgnoreListManager;
 import org.bestraxstudio.playerrooms.manager.InvitationManager;
 import org.bestraxstudio.playerrooms.manager.PlayerRoomManager;
 import org.bestraxstudio.playerrooms.service.RoomService;
+import org.bestraxstudio.playerrooms.util.ComponentUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Loader extends JavaPlugin {
@@ -55,7 +56,7 @@ public class Loader extends JavaPlugin {
             generator.generateAllRooms();
         }
 
-        getLogger().info(messages.getPluginEnabled(java.util.Map.of("count", String.valueOf(roomService.getAllRooms().size()))));
+        getLogger().info(messages.getPluginEnabled(java.util.Map.of("count", ComponentUtil.updateString(String.valueOf(roomService.getAllRooms().size())))).toString());
     }
 
     @Override
@@ -63,7 +64,7 @@ public class Loader extends JavaPlugin {
         if (playerRoomManager != null) playerRoomManager.clearAll();
         if (invitationManager != null) invitationManager.cleanup();
         if (ignoreListManager != null) ignoreListManager.clearAll();
-        getLogger().info(messages.getPluginDisabled());
+        getLogger().info(messages.getPluginDisabled().toString());
     }
 
     public void reloadCommandBlocker() {

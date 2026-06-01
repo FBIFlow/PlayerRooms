@@ -34,7 +34,7 @@ public class PVPProtectionListener implements Listener {
 
         if (attackerRoom != null && attackerRoom.equals(victimRoom)) {
             event.setCancelled(true);
-            attacker.sendMessage(ComponentUtil.updateString(plugin.getMessages().getProtectionPvpDisabled()));
+            attacker.sendMessage(plugin.getMessages().getProtectionPvpDisabled());
         }
     }
 
